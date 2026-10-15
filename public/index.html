@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SocialTrack CRM & Auto-Responder | Equilibrio Bienestar y Nutrición</title>
+  <meta name="description" content="Plataforma Omnicanal de Rastreoc de Mensajes, Respuestas Automáticas Inteligentes y Embudo de Ventas para Facebook, Instagram, TikTok y YouTube.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos de la aplicación -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/inbox.css">
+  <link rel="stylesheet" href="css/pipeline.css">
+  <link rel="stylesheet" href="css/rules.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- HEADER SUPERIOR -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-badge">
+          <div class="brand-logo-icon">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div class="brand-info">
+            <h1 class="brand-title">Equilibrio Bienestar y Nutrición</h1>
+            <span class="brand-subtitle">Centro Unificado de Redes Sociales & CRM de Ventas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTADO DE CANALES EN VIVO -->
+      <div class="header-center">
+        <div class="social-channels-bar">
+          <a href="https://www.facebook.com/share/1EtoMYvYTw/" target="_blank" class="channel-pill channel-fb active" title="Facebook Page: Conectada">
+            <i class="fa-brands fa-facebook"></i>
+            <span>Facebook</span>
+            <span class="live-indicator"></span>
+          </a>
+          <a href="https://instagram.com/equilibrionutricion8" target="_blank" class="channel-pill channel-ig active" title="Instagram: @equilibrionutricion8">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+            <span class="live-indicator"></span>
+          </a>
+          <a href="https://vt.tiktok.com/ZSgdKyBQL/" target="_blank" class="channel-pill channel-tt active" title="TikTok: @equilibriobienestarynutricion">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>TikTok</span>
+            <span class="live-indicator"></span>
+          </a>
+          <a href="https://youtube.com/@equilibriobienestarynutricion" target="_blank" class="channel-pill channel-yt active" title="YouTube: @equilibriobienestarynutricion">
+            <i class="fa-brands fa-youtube"></i>
+            <span>YouTube</span>
+            <span class="live-indicator"></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Botón Simulador Rápido -->
+        <button id="btn-open-simulator" class="btn btn-primary-gradient" title="Simular mensaje entrante para probar el auto-responder">
+          <i class="fa-solid fa-flask"></i>
+          <span>Simular Mensaje</span>
+        </button>
+
+        <!-- Toggle Modo Oscuro / Claro -->
+        <button id="btn-theme-toggle" class="btn-icon-round" title="Cambiar tema">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- Botón Contacto WhatsApp de Negocio -->
+        <a href="https://wa.me/5215500000000" target="_blank" class="btn btn-whatsapp-direct" title="WhatsApp Oficial del Negocio">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>WhatsApp Ventas</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- CUERPO PRINCIPAL CON SIDEBAR Y VISTAS -->
+    <div class="app-main-layout">
+      
+      <!-- BARRA LATERAL DE NAVEGACIÓN -->
+      <nav class="app-sidebar">
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <button class="nav-link active" data-view="inbox" id="nav-inbox">
+              <i class="fa-solid fa-inbox"></i>
+              <span>Bandeja Social</span>
+              <span class="badge-counter" id="unread-total-badge">3</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-view="pipeline" id="nav-pipeline">
+              <i class="fa-solid fa-chart-kanban"></i>
+              <span>Embudo CRM</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-view="rules" id="nav-rules">
+              <i class="fa-solid fa-robot"></i>
+              <span>Auto-Respuestas & IA</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-view="analytics" id="nav-analytics">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Métricas & Ventas</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-view="channels" id="nav-channels">
+              <i class="fa-solid fa-network-wired"></i>
+              <span>Conexión de Redes</span>
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tarjeta de Asistente IA en Sidebar -->
+        <div class="sidebar-ai-card">
+          <div class="ai-status-row">
+            <span class="ai-sparkle"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+            <div class="ai-title-wrap">
+              <strong>Asistente IA Activo</strong>
+              <small>Gemini + Respuestas Smart</small>
+            </div>
+          </div>
+          <p class="ai-desc">Califica y responde consultas de Glutatión, Planes Nutricionales y Costos.</p>
+          <button class="btn btn-xs btn-outline" id="btn-quick-config-ai">Configurar Prompt</button>
+        </div>
+
+        <!-- Footer Sidebar -->
+        <div class="sidebar-footer">
+          <div class="system-status-pill">
+            <span class="pulse-dot"></span>
+            <span>Servidor Webhook 200 OK</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- ÁREA DE CONTENIDO -->
+      <main class="app-content-area">
+
+        <!-- ============================================== -->
+        <!-- VISTA 1: BANDEJA UNIFICADA SOCIAL (INBOX)      -->
+        <!-- ============================================== -->
+        <section id="view-inbox" class="app-view active">
+          <div class="inbox-layout">
+            
+            <!-- COLUMNA 1: LISTADO DE CONVERSACIONES -->
+            <div class="inbox-sidebar">
+              
+              <!-- Buscador y Filtros Rápidos -->
+              <div class="inbox-search-box">
+                <div class="search-input-wrap">
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                  <input type="text" id="inbox-search-input" placeholder="Buscar prospecto, mensaje o #etiqueta...">
+                </div>
+              </div>
+
+              <!-- Filtro de Redes Sociales -->
+              <div class="channel-filter-tabs">
+                <button class="filter-tab active" data-channel="all" title="Ver todas las redes">
+                  <span>Todas</span>
+                </button>
+                <button class="filter-tab tab-fb" data-channel="facebook" title="Solo Facebook">
+                  <i class="fa-brands fa-facebook"></i>
+                  <span>FB</span>
+                </button>
+                <button class="filter-tab tab-ig" data-channel="instagram" title="Solo Instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                  <span>IG</span>
+                </button>
+                <button class="filter-tab tab-tt" data-channel="tiktok" title="Solo TikTok">
+                  <i class="fa-brands fa-tiktok"></i>
+                  <span>TikTok</span>
+                </button>
+                <button class="filter-tab tab-yt" data-channel="youtube" title="Solo YouTube">
+                  <i class="fa-brands fa-youtube"></i>
+                  <span>YouTube</span>
+                </button>
+              </div>
+
+              <!-- Filtros de Estado -->
+              <div class="status-filter-pills">
+                <button class="pill-filter active" data-status="all">Todos</button>
+                <button class="pill-filter" data-status="unread">No leídos</button>
+                <button class="pill-filter" data-status="replied">Respondidos</button>
+              </div>
+
+              <!-- Lista de Chats -->
+              <div class="conversation-list" id="conversation-list">
+                <!-- Se llena dinámicamente con JS -->
+              </div>
+            </div>
+
+            <!-- COLUMNA 2: VENTANA DE CHAT / MENSAJES -->
+            <div class="chat-viewport">
+              
+              <!-- Encabezado del Chat Activo -->
+              <div class="chat-header" id="chat-header">
+                <div class="chat-contact-info">
+                  <div class="chat-avatar-wrap">
+                    <img id="chat-contact-avatar" src="" alt="Avatar" class="chat-avatar">
+                    <span id="chat-channel-badge" class="channel-sub-icon"></span>
+                  </div>
+                  <div class="chat-contact-meta">
+                    <div class="name-row">
+                      <h3 id="chat-contact-name" class="contact-name">Selecciona un mensaje</h3>
+                      <span id="chat-lead-stage-badge" class="stage-tag">Nuevo Prospecto</span>
+                    </div>
+                    <div class="handle-row">
+                      <span id="chat-contact-handle" class="contact-handle">@usuario</span>
+                      <span class="dot-separator">•</span>
+                      <a id="chat-external-profile-link" href="#" target="_blank" class="external-link" title="Ver en la red social">
+                        <span>Ver Perfil Original</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-header-actions">
+                  <button id="btn-launch-whatsapp-chat" class="btn btn-sm btn-whatsapp" title="Abrir WhatsApp para cerrar venta">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Chatear en WhatsApp</span>
+                  </button>
+                  <button id="btn-toggle-lead-details" class="btn-icon" title="Ver ficha completa del prospecto">
+                    <i class="fa-solid fa-address-card"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Contexto del mensaje original (Post, Reel, Video, etc.) -->
+              <div class="message-source-banner" id="message-source-banner">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span id="message-source-text">Origen: Mensaje directo</span>
+              </div>
+
+              <!-- Historial de Mensajes -->
+              <div class="chat-messages-container" id="chat-messages-container">
+                <!-- Mensajes inyectados dinámicamente -->
+              </div>
+
+              <!-- Barra de Respuestas Rápidas -->
+              <div class="quick-replies-toolbar">
+                <span class="qr-label"><i class="fa-solid fa-bolt"></i> Rápidas:</span>
+                <div class="qr-pills-scroll" id="quick-replies-pills">
+                  <!-- Se llena con JS -->
+                </div>
+              </div>
+
+              <!-- Compositor de Mensaje -->
+              <div class="chat-composer">
+                <div class="composer-top-bar">
+                  <button id="btn-ai-suggest-reply" class="btn btn-xs btn-ai-sparkle" title="Generar respuesta inteligente de venta">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Sugerir con IA</span>
+                  </button>
+                  <span class="auto-reply-note" id="auto-reply-status-text">
+                    <i class="fa-solid fa-circle-check"></i> Auto-Responder disponible
+                  </span>
+                </div>
+                
+                <div class="composer-input-row">
+                  <textarea id="composer-textarea" placeholder="Escribe una respuesta para el prospecto... (Presiona Enter para enviar)" rows="2"></textarea>
+                  <button id="btn-send-message" class="btn btn-send" title="Enviar respuesta">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- COLUMNA 3: FICHA CRM DEL PROSPECTO -->
+            <aside class="lead-dossier-panel" id="lead-dossier-panel">
+              <div class="dossier-header">
+                <h4><i class="fa-solid fa-user-tag"></i> Ficha del Prospecto</h4>
+                <button class="btn-close-dossier" id="btn-close-dossier"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+
+              <div class="dossier-body" id="dossier-body">
+                
+                <!-- Calificación / Lead Score -->
+                <div class="lead-score-card">
+                  <div class="score-number-wrap">
+                    <span class="score-val" id="dossier-score">92</span>
+                    <span class="score-max">/100</span>
+                  </div>
+                  <div class="score-info">
+                    <strong>Calificación de Compra</strong>
+                    <span class="score-label" id="dossier-score-label">Alta Intención de Compra</span>
+                  </div>
+                </div>
+
+                <!-- Selector de Etapa del Embudo -->
+                <div class="dossier-field">
+                  <label><i class="fa-solid fa-timeline"></i> Etapa en el Embudo:</label>
+                  <select id="dossier-stage-select" class="form-select">
+                    <option value="new">1. Nuevo Prospecto</option>
+                    <option value="contacted">2. En Conversación</option>
+                    <option value="appointment">3. Cita Agendada</option>
+                    <option value="proposal">4. Propuesta / Cotización</option>
+                    <option value="won">5. Venta Cerrada 🎉</option>
+                    <option value="lost">6. Descartado</option>
+                  </select>
+                </div>
+
+                <!-- Interés Principal -->
+                <div class="dossier-field">
+                  <label><i class="fa-solid fa-heart-pulse"></i> Interés Principal:</label>
+                  <input type="text" id="dossier-interest-input" class="form-input" placeholder="Ej: Glutatión / Plan Nutricional">
+                </div>
+
+                <!-- Valor Estimado de Venta -->
+                <div class="dossier-field">
+                  <label><i class="fa-solid fa-money-bill-wave"></i> Valor Estimado (MXN):</label>
+                  <input type="number" id="dossier-value-input" class="form-input" placeholder="0.00">
+                </div>
+
+                <!-- Datos de Contacto Directo -->
+                <div class="dossier-field">
+                  <label><i class="fa-solid fa-phone"></i> Teléfono / WhatsApp:</label>
+                  <input type="text" id="dossier-phone-input" class="form-input" placeholder="+52 55 ...">
+                </div>
+
+                <div class="dossier-field">
+                  <label><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label>
+                  <input type="email" id="dossier-email-input" class="form-input" placeholder="cliente@correo.com">
+                </div>
+
+                <!-- Botón Guardar Cambios -->
+                <button id="btn-save-lead-details" class="btn btn-primary btn-block">
+                  <i class="fa-solid fa-floppy-disk"></i> Guardar Ficha
+                </button>
+
+                <!-- Etiquetas del Prospecto -->
+                <div class="dossier-tags-section">
+                  <label><i class="fa-solid fa-tags"></i> Etiquetas:</label>
+                  <div class="tags-container" id="dossier-tags-container">
+                    <!-- Se llena con JS -->
+                  </div>
+                </div>
+
+                <!-- Notas de Seguimiento Interno -->
+                <div class="dossier-notes-section">
+                  <label><i class="fa-solid fa-note-sticky"></i> Notas de Seguimiento:</label>
+                  <div class="add-note-box">
+                    <input type="text" id="dossier-new-note-input" placeholder="Añadir nota interna...">
+                    <button id="btn-add-note" class="btn btn-sm btn-secondary"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                  <div class="notes-timeline" id="dossier-notes-timeline">
+                    <!-- Se llena con JS -->
+                  </div>
+                </div>
+
+              </div>
+            </aside>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VISTA 2: EMBUDO CRM KANBAN (PIPELINE)          -->
+        <!-- ============================================== -->
+        <section id="view-pipeline" class="app-view">
+          <div class="pipeline-header">
+            <div>
+              <h2><i class="fa-solid fa-chart-kanban"></i> Embudo de Prospectos & Ventas</h2>
+              <p class="subtitle">Monitorea a los prospectos de Facebook, Instagram, TikTok y YouTube desde su primer contacto hasta el cierre.</p>
+            </div>
+            <div class="pipeline-stats-summary" id="pipeline-stats-summary">
+              <!-- Total valor en juego -->
+            </div>
+          </div>
+
+          <div class="kanban-board-container" id="kanban-board">
+            <!-- Columnas del embudo generadas con JS -->
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VISTA 3: AUTO-RESPUESTAS & ASISTENTE IA        -->
+        <!-- ============================================== -->
+        <section id="view-rules" class="app-view">
+          <div class="rules-view-layout">
+            
+            <div class="rules-header">
+              <div>
+                <h2><i class="fa-solid fa-robot"></i> Respuestas Automáticas Inteligentes</h2>
+                <p class="subtitle">Configura respuestas instantáneas por palabras clave, bienvenida, fuera de horario y asistente con IA.</p>
+              </div>
+              <button id="btn-open-new-rule-modal" class="btn btn-primary-gradient">
+                <i class="fa-solid fa-plus"></i>
+                <span>Crear Nueva Regla</span>
+              </button>
+            </div>
+
+            <!-- Panel de Control General de IA & Horarios -->
+            <div class="ai-config-panel">
+              <div class="config-card">
+                <div class="config-card-header">
+                  <div class="title-with-icon">
+                    <i class="fa-solid fa-brain"></i>
+                    <h4>Personalidad & Prompt del Asistente IA (Equilibrio)</h4>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-ai-enabled" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="config-desc">Instrucciones que sigue la IA para sugerir respuestas comerciales de nutrición, glutatión y citas:</p>
+                <textarea id="ai-system-prompt-input" rows="4" class="form-textarea"></textarea>
+                <div class="config-card-footer">
+                  <button id="btn-save-ai-prompt" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-check"></i> Guardar Prompt
+                  </button>
+                </div>
+              </div>
+
+              <div class="config-card">
+                <div class="config-card-header">
+                  <div class="title-with-icon">
+                    <i class="fa-solid fa-clock"></i>
+                    <h4>Horario de Atención Comercial</h4>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-hours-enabled" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="config-desc">Fuera de este horario se enviará la regla automática de descanso con invitación a WhatsApp:</p>
+                <div class="hours-inputs-row">
+                  <div>
+                    <label>Hora Inicio:</label>
+                    <input type="time" id="hours-start-input" value="09:00" class="form-input">
+                  </div>
+                  <div>
+                    <label>Hora Cierre:</label>
+                    <input type="time" id="hours-end-input" value="20:00" class="form-input">
+                  </div>
+                </div>
+                <div class="config-card-footer">
+                  <button id="btn-save-hours" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-check"></i> Guardar Horario
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Listado de Reglas Activas -->
+            <div class="rules-list-section">
+              <h3 class="section-title"><i class="fa-solid fa-list-check"></i> Reglas Activas en el Sistema</h3>
+              <div class="rules-grid" id="rules-grid">
+                <!-- Se llena con JS -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VISTA 4: MÉTRICAS Y ANALÍTICAS                 -->
+        <!-- ============================================== -->
+        <section id="view-analytics" class="app-view">
+          <div class="analytics-layout">
+            <div class="analytics-header">
+              <h2><i class="fa-solid fa-chart-line"></i> Métricas & Conversión de Ventas</h2>
+              <p class="subtitle">Rendimiento en tiempo real de tus canales de redes sociales y tasa de cierre de prospectos.</p>
+            </div>
+
+            <!-- Tarjetas KPIs -->
+            <div class="kpi-grid" id="analytics-kpi-grid">
+              <!-- Llenado con JS -->
+            </div>
+
+            <!-- Gráficas y Desgloses -->
+            <div class="analytics-charts-grid">
+              
+              <!-- Desglose por Red Social -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4><i class="fa-solid fa-share-nodes"></i> Mensajes por Red Social</h4>
+                </div>
+                <div class="channels-breakdown-list" id="analytics-channels-breakdown">
+                  <!-- Llenado con JS -->
+                </div>
+              </div>
+
+              <!-- Embudo de Conversión -->
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h4><i class="fa-solid fa-filter"></i> Embudo de Conversión Comercial</h4>
+                </div>
+                <div class="funnel-visual" id="analytics-funnel-visual">
+                  <!-- Llenado con JS -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VISTA 5: CONEXIÓN DE CANALES (SETUP WIZARD)   -->
+        <!-- ============================================== -->
+        <section id="view-channels" class="app-view">
+          <div class="channels-wizard-layout">
+            <div class="wizard-header">
+              <h2><i class="fa-solid fa-network-wired"></i> Conexión & Webhooks de Redes Sociales</h2>
+              <p class="subtitle">Monitorea y conecta tus 4 páginas oficiales de Equilibrio Bienestar y Nutrición.</p>
+            </div>
+
+            <div class="channels-grid">
+              
+              <!-- TARJETA 1: FACEBOOK -->
+              <div class="channel-card fb-theme">
+                <div class="channel-card-top">
+                  <div class="channel-icon-circle"><i class="fa-brands fa-facebook"></i></div>
+                  <div class="channel-title-wrap">
+                    <h4>Facebook Fan Page & Messenger</h4>
+                    <a href="https://www.facebook.com/share/1EtoMYvYTw/" target="_blank" class="channel-url">
+                      https://www.facebook.com/share/1EtoMYvYTw/ <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                </div>
+                <div class="channel-card-body">
+                  <p class="guide-text">Rastrea mensajes directos de Facebook Messenger y comentarios en las publicaciones de la página.</p>
+                  <div class="webhook-endpoint-box">
+                    <label>Webhook URL (Meta Developers):</label>
+                    <div class="copy-input-wrap">
+                      <input type="text" readonly value="http://tu-dominio.com/api/webhooks/facebook" class="code-input">
+                      <button class="btn-copy" onclick="navigator.clipboard.writeText('http://tu-dominio.com/api/webhooks/facebook')"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                    <label>Verify Token:</label>
+                    <div class="copy-input-wrap">
+                      <input type="text" readonly value="equilibrio_social_token_2026" class="code-input">
+                      <button class="btn-copy" onclick="navigator.clipboard.writeText('equilibrio_social_token_2026')"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-outline test-channel-btn" data-channel="facebook">
+                    <i class="fa-solid fa-vial"></i> Probar Conexión
+                  </button>
+                </div>
+              </div>
+
+              <!-- TARJETA 2: INSTAGRAM -->
+              <div class="channel-card ig-theme">
+                <div class="channel-card-top">
+                  <div class="channel-icon-circle"><i class="fa-brands fa-instagram"></i></div>
+                  <div class="channel-title-wrap">
+                    <h4>Instagram Business / DM</h4>
+                    <a href="https://instagram.com/equilibrionutricion8" target="_blank" class="channel-url">
+                      @equilibrionutricion8 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                </div>
+                <div class="channel-card-body">
+                  <p class="guide-text">Rastrea mensajes directos (DMs), respuestas a historias y comentarios en Reels y publicaciones.</p>
+                  <div class="webhook-endpoint-box">
+                    <label>Webhook URL (Instagram Graph API):</label>
+                    <div class="copy-input-wrap">
+                      <input type="text" readonly value="http://tu-dominio.com/api/webhooks/instagram" class="code-input">
+                      <button class="btn-copy" onclick="navigator.clipboard.writeText('http://tu-dominio.com/api/webhooks/instagram')"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-outline test-channel-btn" data-channel="instagram">
+                    <i class="fa-solid fa-vial"></i> Probar Conexión
+                  </button>
+                </div>
+              </div>
+
+              <!-- TARJETA 3: TIKTOK -->
+              <div class="channel-card tt-theme">
+                <div class="channel-card-top">
+                  <div class="channel-icon-circle"><i class="fa-brands fa-tiktok"></i></div>
+                  <div class="channel-title-wrap">
+                    <h4>TikTok Business</h4>
+                    <a href="https://vt.tiktok.com/ZSgdKyBQL/" target="_blank" class="channel-url">
+                      @equilibriobienestarynutricion <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                </div>
+                <div class="channel-card-body">
+                  <p class="guide-text">Rastrea mensajes directos de TikTok y comentarios en videos donde las personas preguntan precios o información.</p>
+                  <div class="webhook-endpoint-box">
+                    <label>Webhook URL (TikTok Developers):</label>
+                    <div class="copy-input-wrap">
+                      <input type="text" readonly value="http://tu-dominio.com/api/webhooks/tiktok" class="code-input">
+                      <button class="btn-copy" onclick="navigator.clipboard.writeText('http://tu-dominio.com/api/webhooks/tiktok')"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-outline test-channel-btn" data-channel="tiktok">
+                    <i class="fa-solid fa-vial"></i> Probar Conexión
+                  </button>
+                </div>
+              </div>
+
+              <!-- TARJETA 4: YOUTUBE -->
+              <div class="channel-card yt-theme">
+                <div class="channel-card-top">
+                  <div class="channel-icon-circle"><i class="fa-brands fa-youtube"></i></div>
+                  <div class="channel-title-wrap">
+                    <h4>YouTube Channel</h4>
+                    <a href="https://youtube.com/@equilibriobienestarynutricion" target="_blank" class="channel-url">
+                      @equilibriobienestarynutricion <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                </div>
+                <div class="channel-card-body">
+                  <p class="guide-text">Rastrea comentarios en videos largos y Shorts pidiendo asesoría nutricional o cómo comprar suplementos.</p>
+                  <div class="webhook-endpoint-box">
+                    <label>Webhook URL (Google PubSub / Endpoint):</label>
+                    <div class="copy-input-wrap">
+                      <input type="text" readonly value="http://tu-dominio.com/api/webhooks/youtube" class="code-input">
+                      <button class="btn-copy" onclick="navigator.clipboard.writeText('http://tu-dominio.com/api/webhooks/youtube')"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-outline test-channel-btn" data-channel="youtube">
+                    <i class="fa-solid fa-vial"></i> Probar Conexión
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- MODAL: SIMULADOR DE MENSAJES EN VIVO -->
+    <div class="modal-overlay" id="modal-simulator">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-flask"></i>
+            <h3>Simulador de Mensajes en Vivo</h3>
+          </div>
+          <button class="modal-close-btn" id="btn-close-simulator"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-description">
+            Envía un mensaje de prueba desde cualquiera de tus 4 redes sociales para comprobar en tiempo real cómo se recibe, cómo el bot auto-responde y cómo se crea el prospecto en tu embudo de ventas.
+          </p>
+
+          <!-- Selección de Red Social -->
+          <div class="form-group">
+            <label>Selecciona la Red Social:</label>
+            <div class="simulator-network-selector">
+              <label class="radio-card fb">
+                <input type="radio" name="sim-channel" value="facebook" checked>
+                <div class="radio-content">
+                  <i class="fa-brands fa-facebook"></i>
+                  <span>Facebook</span>
+                </div>
+              </label>
+              <label class="radio-card ig">
+                <input type="radio" name="sim-channel" value="instagram">
+                <div class="radio-content">
+                  <i class="fa-brands fa-instagram"></i>
+                  <span>Instagram</span>
+                </div>
+              </label>
+              <label class="radio-card tt">
+                <input type="radio" name="sim-channel" value="tiktok">
+                <div class="radio-content">
+                  <i class="fa-brands fa-tiktok"></i>
+                  <span>TikTok</span>
+                </div>
+              </label>
+              <label class="radio-card yt">
+                <input type="radio" name="sim-channel" value="youtube">
+                <div class="radio-content">
+                  <i class="fa-brands fa-youtube"></i>
+                  <span>YouTube</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Datos del Prospecto Simulado -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Nombre del Prospecto:</label>
+              <input type="text" id="sim-contact-name" class="form-input" value="Gabriela Morales">
+            </div>
+            <div class="form-group flex-1">
+              <label>Usuario / Handle:</label>
+              <input type="text" id="sim-contact-username" class="form-input" value="@gaby_nutri_salud">
+            </div>
+          </div>
+
+          <!-- Plantillas de Mensajes de Prueba -->
+          <div class="form-group">
+            <label>Mensajes de Ejemplo Rápidos:</label>
+            <div class="sample-pills">
+              <button class="sample-pill" data-msg="Hola! Vi su video sobre Glutatión. ¿Qué precio tiene y cómo se toma para subir las defensas?">💰 Preguntar Precio & Glutatión</button>
+              <button class="sample-pill" data-msg="Buenas tardes, me gustaría agendar una cita online para bajar de peso. Mi WhatsApp es 55 4321 9876.">📅 Pedir Cita + WhatsApp</button>
+              <button class="sample-pill" data-msg="Hola, ¿me pueden pasar su contacto o teléfono para información de negocio y distribución?">💼 Oportunidad de Negocio</button>
+            </div>
+          </div>
+
+          <!-- Texto del Mensaje -->
+          <div class="form-group">
+            <label>Mensaje que enviaría el prospecto:</label>
+            <textarea id="sim-message-text" rows="3" class="form-textarea" placeholder="Escribe el mensaje del cliente...">Hola! Vi su video sobre Glutatión. ¿Qué precio tiene y cómo se toma para subir las defensas?</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-cancel-simulator">Cancelar</button>
+          <button class="btn btn-primary-gradient" id="btn-submit-simulator">
+            <i class="fa-solid fa-paper-plane"></i> Enviar Mensaje Simulado
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: NUEVA REGLA DE AUTO-RESPUESTA -->
+    <div class="modal-overlay" id="modal-new-rule">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-robot"></i>
+            <h3 id="modal-rule-title">Nueva Regla de Auto-Respuesta</h3>
+          </div>
+          <button class="modal-close-btn" id="btn-close-rule-modal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="rule-edit-id" value="">
+          
+          <div class="form-group">
+            <label>Título de la Regla:</label>
+            <input type="text" id="rule-title-input" class="form-input" placeholder="Ej: Información de Planes Nutricionales">
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Disparador:</label>
+            <select id="rule-trigger-type" class="form-select">
+              <option value="keyword">Por Palabras Clave (Keywords)</option>
+              <option value="welcome">Mensaje de Bienvenida (Primer contacto)</option>
+              <option value="off_hours">Fuera de Horario de Atención</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="rule-keywords-group">
+            <label>Palabras clave que activan la regla (separadas por coma):</label>
+            <input type="text" id="rule-keywords-input" class="form-input" placeholder="precio, costo, cuanto, cotización">
+            <small class="form-hint">Si el cliente escribe cualquiera de estas palabras, el bot responderá de inmediato.</small>
+          </div>
+
+          <div class="form-group">
+            <label>Respuesta Automática que se enviará:</label>
+            <textarea id="rule-response-input" rows="4" class="form-textarea" placeholder="Escribe el mensaje con el que responderá el sistema..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Mover Prospecto a la Etapa:</label>
+              <select id="rule-stage-select" class="form-select">
+                <option value="contacted">En Conversación</option>
+                <option value="appointment">Cita Agendada</option>
+                <option value="proposal">Propuesta / Cotización</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label>Etiqueta a agregar:</label>
+              <input type="text" id="rule-tag-input" class="form-input" placeholder="#PreguntóInfo">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-cancel-rule-modal">Cancelar</button>
+          <button class="btn btn-primary" id="btn-save-rule-submit">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Regla
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
+    <div class="toast-container" id="toast-container"></div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/inbox.js"></script>
+  <script src="js/pipeline.js"></script>
+  <script src="js/rules.js"></script>
+  <script src="js/channels.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/simulator.js"></script>
+</body>
+</html>
