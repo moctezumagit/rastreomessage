@@ -159,25 +159,40 @@ app.post('/api/conversations/:id/messages', async (req, res) => {
   });
 
   // 2. Si las claves de API están configuradas, intentar enviar a la red social
+  let deliveryResult = { success: true };
   if (conv.channel === 'facebook' || conv.channel === 'instagram') {
-    await metaService.sendMessage({
+    deliveryResult = await metaService.sendMessage({
       recipientId: conv.contact.id,
       messageText: text,
       channel: conv.channel
     });
   } else if (conv.channel === 'tiktok') {
-    await tiktokService.sendMessage({
+    deliveryResult = await tiktokService.sendMessage({
       openId: conv.contact.id,
       text
     });
   } else if (conv.channel === 'youtube') {
-    await youtubeService.replyToComment({
+    deliveryResult = await youtubeService.replyToComment({
       commentId: conv.contact.id,
       replyText: text
     });
   }
 
-  res.json({ success: true, ...result });
+  let deliveryWarning = null;
+  if (deliveryResult && deliveryResult.success === false) {
+    if (deliveryResult.subcode === 2534022) {
+      deliveryWarning = 'Meta rechazó la entrega en Instagram (código 2534022): Verifica que en tu app móvil de Instagram (@equilibrionutricion8) esté activo "Permitir acceso a los mensajes" en Configuración > Mensajes > Herramientas conectadas.';
+    } else {
+      deliveryWarning = `No se pudo entregar en ${conv.channel}: ${deliveryResult.error || 'Error de API'}`;
+    }
+  }
+
+  res.json({ 
+    success: true, 
+    deliveredToMeta: deliveryResult?.success !== false,
+    deliveryWarning,
+    ...result 
+  });
 });
 
 // Sugerir respuesta con IA para un mensaje

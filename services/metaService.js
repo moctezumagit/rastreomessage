@@ -513,12 +513,25 @@ const metaService = {
 
           // Auto-respuesta automática
           if (lastMsg.sender === 'customer') {
-            await autoResponder.processIncomingMessage({
+            const autoRes = await autoResponder.processIncomingMessage({
               convId: newConv.id,
               channel: 'instagram',
               messageText: lastMsg.text,
               isNewConversation: true
             });
+
+            const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+            if (autoRes?.triggered && replyText) {
+              console.log(`[Meta IG AutoReply] Enviando respuesta automática a Instagram ID ${customer.id}: "${replyText.substring(0, 50)}..."`);
+              const sendRes = await metaService.sendMessage({
+                recipientId: customer.id,
+                messageText: replyText,
+                channel: 'instagram'
+              });
+              if (!sendRes.success) {
+                console.warn(`[Meta IG AutoReply Warning] No se pudo entregar respuesta automática a Instagram:`, sendRes.error);
+              }
+            }
           }
         } else {
           // Ya existe: anexar nuevos mensajes no registrados
@@ -541,12 +554,25 @@ const metaService = {
               db.saveUpdatedConversation(existing);
               newMessagesIngested += freshMsgs.length;
 
-              await autoResponder.processIncomingMessage({
+              const autoRes = await autoResponder.processIncomingMessage({
                 convId: existing.id,
                 channel: 'instagram',
                 messageText: lastMsg.text,
                 isNewConversation: false
               });
+
+              const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+              if (autoRes?.triggered && replyText) {
+                console.log(`[Meta IG AutoReply] Enviando respuesta automática a Instagram ID ${customer.id}: "${replyText.substring(0, 50)}..."`);
+                const sendRes = await metaService.sendMessage({
+                  recipientId: customer.id,
+                  messageText: replyText,
+                  channel: 'instagram'
+                });
+                if (!sendRes.success) {
+                  console.warn(`[Meta IG AutoReply Warning] No se pudo entregar respuesta automática a Instagram:`, sendRes.error);
+                }
+              }
             } else {
               db.saveUpdatedConversation(existing);
             }
@@ -595,7 +621,8 @@ const metaService = {
     }
 
     try {
-      const url = `https://graph.facebook.com/v19.0/me/messages?access_token=${token}`;
+      const pageId = creds.pageId || 'me';
+      const url = `https://graph.facebook.com/v19.0/${pageId}/messages?access_token=${token}`;
       const payload = {
         recipient: { id: recipientId },
         message: { text: messageText }
@@ -609,9 +636,21 @@ const metaService = {
 
       const data = await response.json();
       if (!response.ok) {
-        console.error('[Meta Send Error]:', data.error);
+        console.error(`[Meta Send Error] [${channel.toUpperCase()}]:`, data.error);
+        if (data.error?.error_subcode === 2534022) {
+          console.warn(`[Meta Send Hint]: Error 2534022 en Instagram ("fuera del período permitido"). Causa habitual: La opción "Permitir acceso a los mensajes" no está activa en la app de Instagram (@equilibrionutricion8 > Configuración > Mensajes y respuestas a historias > Controles de mensajes > Herramientas conectadas) o el usuario está fuera de la ventana de 24h.`);
+        }
+        return {
+          success: false,
+          error: data.error?.message || 'Error al enviar a Meta',
+          code: data.error?.code,
+          subcode: data.error?.error_subcode,
+          data
+        };
       }
-      return { success: response.ok, data };
+
+      console.log(`[Meta Send Success] [${channel.toUpperCase()}]: Mensaje entregado exitosamente a ${recipientId}. Message ID:`, data.message_id || data.recipient_id);
+      return { success: true, data };
     } catch (error) {
       console.error('Error al enviar mensaje vía Meta Graph API:', error);
       return { success: false, error: error.message };

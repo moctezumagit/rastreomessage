@@ -91,12 +91,12 @@
         "nextReminder": null
       },
       "status": "auto_replied",
-      "unreadCount": 1,
+      "unreadCount": 0,
       "sourceContext": "Instagram Direct (@equilibrionutricion8 en Vivo)",
       "lastMessage": {
-        "id": "msg-1792050359481",
+        "id": "msg-1792051454413",
         "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
-        "timestamp": "2026-10-15T07:45:59.481Z",
+        "timestamp": "2026-10-15T08:04:14.413Z",
         "sender": "bot"
       },
       "messages": [
@@ -111,6 +111,36 @@
           "id": "msg-1792050359481",
           "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
           "timestamp": "2026-10-15T07:45:59.481Z",
+          "sender": "bot",
+          "ruleTriggered": "🌙 Fuera de Horario de Atención",
+          "mediaUrl": null
+        },
+        {
+          "id": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzUxMjIzNTU0NDI0OTc5NzM0MDk3MzQ3MzIwMjE3NgZDZD",
+          "metaId": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzUxMjIzNTU0NDI0OTc5NzM0MDk3MzQ3MzIwMjE3NgZDZD",
+          "text": "Prueba 2 desde instagram",
+          "timestamp": "2026-10-15T08:02:09+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "msg-1792051333697",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T08:02:13.697Z",
+          "sender": "bot",
+          "ruleTriggered": "🌙 Fuera de Horario de Atención",
+          "mediaUrl": null
+        },
+        {
+          "id": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzUxNDQ0ODUzMzk2Nzg0OTI4MzQ4NDY4MzA3NTU4NAZDZD",
+          "metaId": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzUxNDQ0ODUzMzk2Nzg0OTI4MzQ4NDY4MzA3NTU4NAZDZD",
+          "text": "Tons",
+          "timestamp": "2026-10-15T08:04:09+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "msg-1792051454413",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T08:04:14.413Z",
           "sender": "bot",
           "ruleTriggered": "🌙 Fuera de Horario de Atención",
           "mediaUrl": null

@@ -374,7 +374,11 @@ const InboxModule = (() => {
     if (res.success && res.conversation) {
       renderMessages(res.conversation.messages);
       loadConversations();
-      showToast('Mensaje enviado al prospecto', 'success', 2000);
+      if (res.deliveredToMeta === false && res.deliveryWarning) {
+        showToast(res.deliveryWarning, 'warning', 8000);
+      } else {
+        showToast('Mensaje enviado al prospecto', 'success', 2500);
+      }
     }
   }
 
