@@ -551,6 +551,9 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook">
+                    <i class="fa-solid fa-key"></i> Configurar Token
+                  </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="facebook">
                     <i class="fa-solid fa-vial"></i> Probar Conexión
                   </button>
@@ -580,6 +583,9 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram">
+                    <i class="fa-solid fa-key"></i> Configurar Token
+                  </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="instagram">
                     <i class="fa-solid fa-vial"></i> Probar Conexión
                   </button>
@@ -609,6 +615,9 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok">
+                    <i class="fa-solid fa-key"></i> Configurar Token
+                  </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="tiktok">
                     <i class="fa-solid fa-vial"></i> Probar Conexión
                   </button>
@@ -638,6 +647,9 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube">
+                    <i class="fa-solid fa-key"></i> Configurar API Key
+                  </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="youtube">
                     <i class="fa-solid fa-vial"></i> Probar Conexión
                   </button>
@@ -795,6 +807,47 @@
           <button class="btn btn-secondary" id="btn-cancel-rule-modal">Cancelar</button>
           <button class="btn btn-primary" id="btn-save-rule-submit">
             <i class="fa-solid fa-floppy-disk"></i> Guardar Regla
+          </button>
+        </div>
+      </div>
+    <!-- MODAL: CONFIGURAR CREDENCIALES Y TOKENS -->
+    <div class="modal-overlay" id="modal-channel-credentials">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <i class="fa-solid fa-key"></i>
+            <h3 id="modal-credentials-title">Configurar Token de Red Social</h3>
+          </div>
+          <button class="modal-close-btn" id="btn-close-credentials-modal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="cred-channel-id" value="">
+          
+          <div id="cred-guide-container" style="background:var(--bg-surface-elevated); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:12px 14px; margin-bottom:16px; font-size:0.8rem; line-height:1.45; color:var(--text-muted);">
+            <!-- Instrucción dinámica -->
+          </div>
+
+          <div class="form-group" id="group-primary-token">
+            <label id="label-primary-token">Token de Acceso (Access Token):</label>
+            <textarea id="input-primary-token" rows="3" class="form-textarea" placeholder="Pega aquí el Token o API Key..."></textarea>
+            <small class="form-hint" id="hint-primary-token">Token generado en la consola de desarrollador.</small>
+          </div>
+
+          <div class="form-row" id="group-secondary-keys">
+            <div class="form-group flex-1" id="group-app-id">
+              <label id="label-app-id">App ID / Client Key:</label>
+              <input type="text" id="input-app-id" class="form-input" placeholder="Opcional">
+            </div>
+            <div class="form-group flex-1" id="group-app-secret">
+              <label id="label-app-secret">App Secret / Client Secret:</label>
+              <input type="password" id="input-app-secret" class="form-input" placeholder="Opcional">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-cancel-credentials-modal">Cancelar</button>
+          <button class="btn btn-primary-gradient" id="btn-save-credentials-submit">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar y Validar Conexión
           </button>
         </div>
       </div>

@@ -94,7 +94,7 @@
         "nextReminder": null
       },
       "status": "auto_replied",
-      "unreadCount": 1,
+      "unreadCount": 0,
       "sourceContext": "Mensaje de prueba en vivo desde instagram",
       "lastMessage": {
         "id": "msg-1792043003432",
@@ -298,8 +298,8 @@
         "lastFollowUp": "2026-10-14T21:01:00Z",
         "nextReminder": "2026-10-15T09:00:00Z"
       },
-      "status": "unread",
-      "unreadCount": 1,
+      "status": "read",
+      "unreadCount": 0,
       "sourceContext": "Comentó en TikTok viral: \"¿Por qué el glutatión es el antioxidante maestro?\"",
       "lastMessage": {
         "id": "m-tt-2",
@@ -415,8 +415,8 @@
         "lastFollowUp": "2026-10-14T17:05:00Z",
         "nextReminder": "2026-10-15T16:00:00Z"
       },
-      "status": "unread",
-      "unreadCount": 1,
+      "status": "read",
+      "unreadCount": 0,
       "sourceContext": "Comentó en publicación de Facebook sobre \"Plan 21 Días Detox\"",
       "lastMessage": {
         "id": "m-fb2-2",

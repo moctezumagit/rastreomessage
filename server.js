@@ -61,6 +61,37 @@ app.post('/api/channels/test', async (req, res) => {
   res.json({ success: true, result });
 });
 
+// Guardar credenciales de API desde la interfaz
+app.post('/api/channels/credentials', (req, res) => {
+  const { channel, credentials } = req.body;
+  if (!channel || !credentials) {
+    return res.status(400).json({ success: false, message: 'Canal y credenciales requeridos' });
+  }
+
+  const settings = db.getSettings();
+  if (!settings.apiCredentials) settings.apiCredentials = {};
+  settings.apiCredentials[channel] = {
+    ...settings.apiCredentials[channel],
+    ...credentials,
+    isConfigured: true
+  };
+
+  db.updateSettings({ apiCredentials: settings.apiCredentials });
+
+  // Actualizar variables de proceso en memoria para uso inmediato
+  if (channel === 'facebook' && credentials.pageAccessToken) {
+    process.env.META_PAGE_ACCESS_TOKEN = credentials.pageAccessToken;
+  }
+  if (channel === 'tiktok' && credentials.accessToken) {
+    process.env.TIKTOK_ACCESS_TOKEN = credentials.accessToken;
+  }
+  if (channel === 'youtube' && credentials.apiKey) {
+    process.env.YOUTUBE_API_KEY = credentials.apiKey;
+  }
+
+  res.json({ success: true, apiCredentials: settings.apiCredentials });
+});
+
 // Conversaciones (Bandeja unificada)
 app.get('/api/conversations', (req, res) => {
   const { channel, status, stage, search } = req.query;

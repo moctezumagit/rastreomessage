@@ -50,7 +50,8 @@ const youtubeService = {
    * Responde a un comentario en YouTube
    */
   replyToComment: async ({ commentId, replyText }) => {
-    const apiKey = process.env.YOUTUBE_API_KEY;
+    const settings = db.getSettings();
+    const apiKey = process.env.YOUTUBE_API_KEY || settings?.apiCredentials?.youtube?.apiKey;
     if (!apiKey) {
       console.log(`[YouTube Mock] API Key no configurada. Respuesta simulada a comentario ${commentId}: "${replyText}"`);
       return { success: true, simulated: true };
@@ -80,11 +81,12 @@ const youtubeService = {
    * Verificar conexión con YouTube Data API
    */
   testConnection: async () => {
-    const apiKey = process.env.YOUTUBE_API_KEY;
+    const settings = db.getSettings();
+    const apiKey = process.env.YOUTUBE_API_KEY || settings?.apiCredentials?.youtube?.apiKey;
     if (!apiKey) {
       return {
         connected: false,
-        message: 'No se ha configurado YOUTUBE_API_KEY en las variables de entorno.'
+        message: 'No se ha configurado YOUTUBE_API_KEY en las variables de entorno o panel de ajustes.'
       };
     }
     return { connected: true, channel: '@equilibriobienestarynutricion' };

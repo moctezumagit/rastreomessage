@@ -54,7 +54,8 @@ const tiktokService = {
    * Enviar respuesta o comentario a TikTok
    */
   sendMessage: async ({ openId, text }) => {
-    const token = process.env.TIKTOK_ACCESS_TOKEN;
+    const settings = db.getSettings();
+    const token = process.env.TIKTOK_ACCESS_TOKEN || settings?.apiCredentials?.tiktok?.accessToken;
     if (!token) {
       console.log(`[TikTok Mock] Token no configurado. Mensaje simulado a ${openId}: "${text}"`);
       return { success: true, simulated: true };
@@ -85,11 +86,12 @@ const tiktokService = {
    * Verificar estado de la conexión
    */
   testConnection: async () => {
-    const token = process.env.TIKTOK_ACCESS_TOKEN;
+    const settings = db.getSettings();
+    const token = process.env.TIKTOK_ACCESS_TOKEN || settings?.apiCredentials?.tiktok?.accessToken;
     if (!token) {
       return {
         connected: false,
-        message: 'No se ha configurado TIKTOK_ACCESS_TOKEN en las variables de entorno.'
+        message: 'No se ha configurado TIKTOK_ACCESS_TOKEN en las variables de entorno o panel de ajustes.'
       };
     }
     return { connected: true, account: '@equilibriobienestarynutricion' };

@@ -124,7 +124,8 @@ const metaService = {
    * Enviar mensaje de respuesta a través de Meta Graph API
    */
   sendMessage: async ({ recipientId, messageText, channel = 'facebook' }) => {
-    const token = process.env.META_PAGE_ACCESS_TOKEN;
+    const settings = db.getSettings();
+    const token = process.env.META_PAGE_ACCESS_TOKEN || settings?.apiCredentials?.facebook?.pageAccessToken;
     if (!token) {
       console.log(`[Meta Mock] Token no configurado. Mensaje simulado a ${recipientId}: "${messageText}"`);
       return { success: true, simulated: true };
@@ -155,7 +156,8 @@ const metaService = {
    * Probar conexión con las credenciales de Facebook / Instagram
    */
   testConnection: async () => {
-    const token = process.env.META_PAGE_ACCESS_TOKEN;
+    const settings = db.getSettings();
+    const token = process.env.META_PAGE_ACCESS_TOKEN || settings?.apiCredentials?.facebook?.pageAccessToken;
     if (!token) {
       return {
         connected: false,
