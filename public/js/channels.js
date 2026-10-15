@@ -114,8 +114,19 @@ const ChannelsModule = (() => {
     const modal = document.getElementById('modal-channel-credentials');
     const btnClose = document.getElementById('btn-close-credentials-modal');
     const btnCancel = document.getElementById('btn-cancel-credentials-modal');
-    if (btnClose) btnClose.addEventListener('click', () => modal.classList.remove('active'));
-    if (btnCancel) btnCancel.addEventListener('click', () => modal.classList.remove('active'));
+    if (btnClose) btnClose.addEventListener('click', () => modal?.classList.remove('active'));
+    if (btnCancel) btnCancel.addEventListener('click', () => modal?.classList.remove('active'));
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
+    });
 
     // Guardar credenciales
     const btnSave = document.getElementById('btn-save-credentials-submit');
@@ -126,36 +137,58 @@ const ChannelsModule = (() => {
 
   function openCredentialsModal(channel) {
     const modal = document.getElementById('modal-channel-credentials');
-    if (!modal) return;
+    if (!modal) {
+      console.error('[ChannelsModule] No se encontró el modal #modal-channel-credentials');
+      return;
+    }
 
     const info = guideInfo[channel] || guideInfo.facebook;
-    const settings = AppState.settings?.apiCredentials || {};
+    const settings = (window.AppState && window.AppState.settings && window.AppState.settings.apiCredentials) 
+      ? window.AppState.settings.apiCredentials 
+      : {};
     const creds = settings[channel] || {};
 
-    document.getElementById('cred-channel-id').value = channel;
-    document.getElementById('modal-credentials-title').textContent = info.title;
-    document.getElementById('cred-guide-container').innerHTML = info.guide;
+    const credInput = document.getElementById('cred-channel-id');
+    const titleEl = document.getElementById('modal-credentials-title');
+    const guideEl = document.getElementById('cred-guide-container');
+    const labelToken = document.getElementById('label-primary-token');
+    const hintToken = document.getElementById('hint-primary-token');
+    const inputToken = document.getElementById('input-primary-token');
+    const secGroup = document.getElementById('group-secondary-keys');
+    const labelAppId = document.getElementById('label-app-id');
+    const labelAppSecret = document.getElementById('label-app-secret');
+    const inputAppId = document.getElementById('input-app-id');
+    const inputAppSecret = document.getElementById('input-app-secret');
+
+    if (credInput) credInput.value = channel;
+    if (titleEl) titleEl.textContent = info.title;
+    if (guideEl) guideEl.innerHTML = info.guide;
 
     // Campo primario
-    document.getElementById('label-primary-token').textContent = info.primaryLabel;
-    document.getElementById('hint-primary-token').textContent = info.primaryHint;
-    const inputToken = document.getElementById('input-primary-token');
-    inputToken.placeholder = info.primaryPlaceholder;
-    inputToken.value = creds.pageAccessToken || creds.accessToken || creds.apiKey || '';
+    if (labelToken) labelToken.textContent = info.primaryLabel;
+    if (hintToken) hintToken.textContent = info.primaryHint;
+    if (inputToken) {
+      inputToken.placeholder = info.primaryPlaceholder;
+      inputToken.value = creds.pageAccessToken || creds.accessToken || creds.apiKey || '';
+    }
 
     // Campos secundarios
-    const secGroup = document.getElementById('group-secondary-keys');
-    if (info.showSecondary) {
-      secGroup.style.display = 'flex';
-      document.getElementById('label-app-id').textContent = info.appIdLabel;
-      document.getElementById('label-app-secret').textContent = info.appSecretLabel;
-      document.getElementById('input-app-id').value = creds.appId || creds.clientKey || '';
-      document.getElementById('input-app-secret').value = creds.appSecret || creds.clientSecret || '';
-    } else {
-      secGroup.style.display = 'none';
+    if (secGroup) {
+      if (info.showSecondary) {
+        secGroup.style.display = 'flex';
+        if (labelAppId) labelAppId.textContent = info.appIdLabel;
+        if (labelAppSecret) labelAppSecret.textContent = info.appSecretLabel;
+        if (inputAppId) inputAppId.value = creds.appId || creds.clientKey || '';
+        if (inputAppSecret) inputAppSecret.value = creds.appSecret || creds.clientSecret || '';
+      } else {
+        secGroup.style.display = 'none';
+      }
     }
 
     modal.classList.add('active');
+    setTimeout(() => {
+      if (inputToken) inputToken.focus();
+    }, 100);
   }
 
   async function handleSaveCredentials() {

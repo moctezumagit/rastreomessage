@@ -546,7 +546,7 @@
                         <span id="token-status-text-facebook">Requerido para leer y responder mensajes reales</span>
                       </div>
                     </div>
-                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook">
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook" onclick="ChannelsModule.openCredentialsModal('facebook')">
                       <i class="fa-solid fa-pen-to-square"></i> Configurar Token
                     </button>
                   </div>
@@ -565,7 +565,7 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
-                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook" onclick="ChannelsModule.openCredentialsModal('facebook')">
                     <i class="fa-solid fa-key"></i> Configurar Token
                   </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="facebook">
@@ -597,7 +597,7 @@
                         <span id="token-status-text-instagram">Mismo Page Access Token de la página vinculada</span>
                       </div>
                     </div>
-                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram">
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram" onclick="ChannelsModule.openCredentialsModal('instagram')">
                       <i class="fa-solid fa-pen-to-square"></i> Configurar Token
                     </button>
                   </div>
@@ -611,7 +611,7 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
-                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram" onclick="ChannelsModule.openCredentialsModal('instagram')">
                     <i class="fa-solid fa-key"></i> Configurar Token
                   </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="instagram">
@@ -643,7 +643,7 @@
                         <span id="token-status-text-tiktok">Access Token y Client Key</span>
                       </div>
                     </div>
-                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok">
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok" onclick="ChannelsModule.openCredentialsModal('tiktok')">
                       <i class="fa-solid fa-pen-to-square"></i> Configurar Token
                     </button>
                   </div>
@@ -657,7 +657,7 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
-                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok" onclick="ChannelsModule.openCredentialsModal('tiktok')">
                     <i class="fa-solid fa-key"></i> Configurar Token
                   </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="tiktok">
@@ -689,7 +689,7 @@
                         <span id="token-status-text-youtube">Clave de API de Google Cloud Console</span>
                       </div>
                     </div>
-                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube">
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube" onclick="ChannelsModule.openCredentialsModal('youtube')">
                       <i class="fa-solid fa-pen-to-square"></i> Configurar API Key
                     </button>
                   </div>
@@ -703,7 +703,7 @@
                   </div>
                 </div>
                 <div class="channel-card-footer">
-                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube">
+                  <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube" onclick="ChannelsModule.openCredentialsModal('youtube')">
                     <i class="fa-solid fa-key"></i> Configurar API Key
                   </button>
                   <button class="btn btn-sm btn-outline test-channel-btn" data-channel="youtube">
@@ -866,6 +866,8 @@
           </button>
         </div>
       </div>
+    </div>
+
     <!-- MODAL: CONFIGURAR CREDENCIALES Y TOKENS -->
     <div class="modal-overlay" id="modal-channel-credentials">
       <div class="modal-dialog">
@@ -908,6 +910,7 @@
         </div>
       </div>
     </div>
+
 
     <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
     <div class="toast-container" id="toast-container"></div>
