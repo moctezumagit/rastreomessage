@@ -685,6 +685,29 @@ const db = {
     return { conversation: newConv, message: newMsg, isNew: true };
   },
 
+  insertConversation: (newConv) => {
+    const data = loadData();
+    const existingIndex = data.conversations.findIndex(c => c.id === newConv.id);
+    if (existingIndex >= 0) {
+      data.conversations[existingIndex] = newConv;
+    } else {
+      data.conversations.unshift(newConv);
+    }
+    saveData(data);
+    return newConv;
+  },
+
+  saveUpdatedConversation: (updatedConv) => {
+    const data = loadData();
+    const idx = data.conversations.findIndex(c => c.id === updatedConv.id);
+    if (idx >= 0) {
+      data.conversations[idx] = updatedConv;
+      saveData(data);
+      return data.conversations[idx];
+    }
+    return null;
+  },
+
   markAsRead: (convId) => {
     const data = loadData();
     const conv = data.conversations.find(c => c.id === convId);

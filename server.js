@@ -62,7 +62,7 @@ app.post('/api/channels/test', async (req, res) => {
 });
 
 // Guardar credenciales de API desde la interfaz
-app.post('/api/channels/credentials', (req, res) => {
+app.post('/api/channels/credentials', async (req, res) => {
   const { channel, credentials } = req.body;
   if (!channel || !credentials) {
     return res.status(400).json({ success: false, message: 'Canal y credenciales requeridos' });
@@ -81,6 +81,12 @@ app.post('/api/channels/credentials', (req, res) => {
   // Actualizar variables de proceso en memoria para uso inmediato
   if (channel === 'facebook' && credentials.pageAccessToken) {
     process.env.META_PAGE_ACCESS_TOKEN = credentials.pageAccessToken;
+    // Resolver y sincronizar en vivo de inmediato
+    metaService.getPageCredentials().then(creds => {
+      if (creds && creds.pageAccessToken) {
+        metaService.syncFacebookConversations();
+      }
+    });
   }
   if (channel === 'tiktok' && credentials.accessToken) {
     process.env.TIKTOK_ACCESS_TOKEN = credentials.accessToken;
@@ -90,6 +96,13 @@ app.post('/api/channels/credentials', (req, res) => {
   }
 
   res.json({ success: true, apiCredentials: settings.apiCredentials });
+});
+
+// Sincronización manual en vivo de Facebook
+app.post('/api/channels/facebook/sync', async (req, res) => {
+  const result = await metaService.syncFacebookConversations();
+  const conversations = db.getConversations();
+  res.json({ success: true, result, conversations });
 });
 
 // Conversaciones (Bandeja unificada)
@@ -322,4 +335,28 @@ app.listen(PORT, () => {
   console.log(`   - TikTok:         http://localhost:${PORT}/api/webhooks/tiktok`);
   console.log(`   - YouTube:        http://localhost:${PORT}/api/webhooks/youtube`);
   console.log(`========================================================`);
+
+  // Sincronización inicial si ya existen credenciales guardadas
+  setTimeout(() => {
+    metaService.getPageCredentials().then(creds => {
+      if (creds && creds.pageAccessToken) {
+        console.log('🔄 Ejecutando sincronización inicial de mensajes de Facebook...');
+        metaService.syncFacebookConversations().then(res => {
+          console.log(`✅ Sincronización inicial completada (${res.conversationsCount || 0} conversaciones procesadas).`);
+        });
+      }
+    });
+  }, 1500);
+
+  // Sondeo en segundo plano cada 12 segundos para detectar nuevos mensajes
+  setInterval(async () => {
+    try {
+      const settings = db.getSettings();
+      if (settings?.apiCredentials?.facebook?.pageAccessToken || process.env.META_PAGE_ACCESS_TOKEN) {
+        await metaService.syncFacebookConversations();
+      }
+    } catch (err) {
+      // Ignorar errores transitorios en sondeo background
+    }
+  }, 12000);
 });

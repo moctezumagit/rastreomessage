@@ -156,12 +156,15 @@
             <!-- COLUMNA 1: LISTADO DE CONVERSACIONES -->
             <div class="inbox-sidebar">
               
-              <!-- Buscador y Filtros Rápidos -->
-              <div class="inbox-search-box">
-                <div class="search-input-wrap">
+              <!-- Buscador y Sincronización en Vivo -->
+              <div class="inbox-search-box" style="display:flex; gap:8px; align-items:center;">
+                <div class="search-input-wrap" style="flex:1;">
                   <i class="fa-solid fa-magnifying-glass search-icon"></i>
                   <input type="text" id="inbox-search-input" placeholder="Buscar prospecto, mensaje o #etiqueta...">
                 </div>
+                <button class="btn btn-sm btn-outline" id="btn-sync-facebook" title="Sincronizar mensajes de Facebook en vivo" onclick="InboxModule.syncFacebookLive()" style="white-space:nowrap; padding:6px 10px; font-size:0.75rem;">
+                  <i class="fa-solid fa-arrows-rotate"></i> Sincronizar FB
+                </button>
               </div>
 
               <!-- Filtro de Redes Sociales -->

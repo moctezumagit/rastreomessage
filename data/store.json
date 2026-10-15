@@ -59,6 +59,123 @@
   },
   "conversations": [
     {
+      "id": "conv-fb-28761985593442949",
+      "channel": "facebook",
+      "contact": {
+        "id": "28761985593442949",
+        "name": "Nestor Moctezuma M",
+        "username": "Nestor Moctezuma M",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+        "profileUrl": "https://www.facebook.com/28761985593442949"
+      },
+      "lead": {
+        "stage": "new",
+        "stageName": "Nuevo Prospecto",
+        "interest": "Mensaje en Fan Page de Facebook",
+        "score": 75,
+        "estimatedValue": 2400,
+        "currency": "MXN",
+        "tags": [
+          "#FacebookMessenger",
+          "#EnVivo",
+          "#ProspectoReal"
+        ],
+        "notes": [
+          {
+            "id": "n-1792048857537",
+            "text": "Prospecto real conectado vía Facebook Messenger. Mensaje: \"Prueba de mensaje\"",
+            "date": "2026-10-15T07:20:57.537Z"
+          }
+        ],
+        "lastFollowUp": "2026-10-15T07:04:01+0000",
+        "nextReminder": null
+      },
+      "status": "auto_replied",
+      "unreadCount": 1,
+      "sourceContext": "Facebook Messenger (Conversación Oficial en Vivo)",
+      "lastMessage": {
+        "id": "msg-1792048857548",
+        "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+        "timestamp": "2026-10-15T07:20:57.548Z",
+        "sender": "bot"
+      },
+      "messages": [
+        {
+          "id": "m_HQgPu-ZRRkPa7NttRl2Iea-0qP_GxpM89Dwg70vu2_GBaU6CqDNmmX9MMWaRqRnxRaTOeZzNguqydNp9N-2aWg",
+          "metaId": "m_HQgPu-ZRRkPa7NttRl2Iea-0qP_GxpM89Dwg70vu2_GBaU6CqDNmmX9MMWaRqRnxRaTOeZzNguqydNp9N-2aWg",
+          "text": "Prueba de mensaje",
+          "timestamp": "2026-10-15T07:04:01+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "msg-1792048857548",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T07:20:57.548Z",
+          "sender": "bot",
+          "ruleTriggered": "🌙 Fuera de Horario de Atención",
+          "mediaUrl": null
+        }
+      ]
+    },
+    {
+      "id": "conv-fb-39229424826703508",
+      "channel": "facebook",
+      "contact": {
+        "id": "39229424826703508",
+        "name": "Nestor Moctezuma",
+        "username": "Nestor Moctezuma",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+        "profileUrl": "https://www.facebook.com/39229424826703508"
+      },
+      "lead": {
+        "stage": "new",
+        "stageName": "Nuevo Prospecto",
+        "interest": "Mensaje en Fan Page de Facebook",
+        "score": 75,
+        "estimatedValue": 2400,
+        "currency": "MXN",
+        "tags": [
+          "#FacebookMessenger",
+          "#EnVivo",
+          "#ProspectoReal"
+        ],
+        "notes": [
+          {
+            "id": "n-1792048857531",
+            "text": "Prospecto real conectado vía Facebook Messenger. Mensaje: \"¡Hola Nestor! Mensaje recibido y sincronizado con SocialTrack CRM de Equilibrio Bienestar y Nutrición 🌱\"",
+            "date": "2026-10-15T07:20:57.532Z"
+          }
+        ],
+        "lastFollowUp": "2026-10-15T07:14:43+0000",
+        "nextReminder": null
+      },
+      "status": "replied",
+      "unreadCount": 0,
+      "sourceContext": "Facebook Messenger (Conversación Oficial en Vivo)",
+      "lastMessage": {
+        "id": "m_Sp8eJqm2kFR-xmzhAwDxtRlcN8DzsGlV9vu0ke5UxnGczBDZE7iucrsdIEJj468ACNja5drztVfsDWNalspmaQ",
+        "text": "¡Hola Nestor! Mensaje recibido y sincronizado con SocialTrack CRM de Equilibrio Bienestar y Nutrición 🌱",
+        "timestamp": "2026-10-15T07:14:43+0000",
+        "sender": "agent"
+      },
+      "messages": [
+        {
+          "id": "m_og4mKLpxX2mlWs0KBR6TXhlcN8DzsGlV9vu0ke5UxnGu7NCz44Lq7yjSduACCtFBKoGEbtu96b6_j5QX0eFK2g",
+          "metaId": "m_og4mKLpxX2mlWs0KBR6TXhlcN8DzsGlV9vu0ke5UxnGu7NCz44Lq7yjSduACCtFBKoGEbtu96b6_j5QX0eFK2g",
+          "text": "prueba mensaje",
+          "timestamp": "2026-10-15T07:09:44+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "m_Sp8eJqm2kFR-xmzhAwDxtRlcN8DzsGlV9vu0ke5UxnGczBDZE7iucrsdIEJj468ACNja5drztVfsDWNalspmaQ",
+          "metaId": "m_Sp8eJqm2kFR-xmzhAwDxtRlcN8DzsGlV9vu0ke5UxnGczBDZE7iucrsdIEJj468ACNja5drztVfsDWNalspmaQ",
+          "text": "¡Hola Nestor! Mensaje recibido y sincronizado con SocialTrack CRM de Equilibrio Bienestar y Nutrición 🌱",
+          "timestamp": "2026-10-15T07:14:43+0000",
+          "sender": "agent"
+        }
+      ]
+    },
+    {
       "id": "conv-instagram-3417",
       "channel": "instagram",
       "contact": {
@@ -653,12 +770,14 @@
     },
     "apiCredentials": {
       "facebook": {
-        "appId": "",
+        "appId": "1454685810125944",
         "appSecret": "",
-        "pageAccessToken": "",
+        "pageAccessToken": "EAAUrB2747HgBShHpHEKDrej2kZAXb8SQf9mcwDixHRkSLEJA4Vf53rAr9exKAraLrjgZA6wKDFQbEpgNQpJrekoiljIHGuQTJm5t1ZAmWmYQZAznYciVyr24gnEbMJT1kA9aoqJq6biDZCT83KBjetbGJNx20AxCv8uUGBlep1HdSNc2tNZBJcaXbmpA16drONQ9zRQlAk",
         "verifyToken": "equilibrio_social_token_2026",
-        "pageId": "1EtoMYvYTw",
-        "isConfigured": false
+        "pageId": "1296082000264195",
+        "isConfigured": true,
+        "pageName": "Vive en Equilibrio, Bienestar y Nutrición",
+        "resolvedPageAccessToken": "EAAUrB2747HgBShHpHEKDrej2kZAXb8SQf9mcwDixHRkSLEJA4Vf53rAr9exKAraLrjgZA6wKDFQbEpgNQpJrekoiljIHGuQTJm5t1ZAmWmYQZAznYciVyr24gnEbMJT1kA9aoqJq6biDZCT83KBjetbGJNx20AxCv8uUGBlep1HdSNc2tNZBJcaXbmpA16drONQ9zRQlAk"
       },
       "instagram": {
         "instagramAccountId": "equilibrionutricion8",
