@@ -213,11 +213,52 @@ const ChannelsModule = (() => {
     if (res.success && res.channels) {
       AppState.channels = res.channels;
     }
+
+    const settingsRes = await apiFetch('/api/settings');
+    if (settingsRes.success && settingsRes.settings) {
+      AppState.settings = settingsRes.settings;
+      updateCardsStatus(settingsRes.settings.apiCredentials || {});
+    }
+  }
+
+  function updateCardsStatus(creds) {
+    const list = ['facebook', 'instagram', 'tiktok', 'youtube'];
+    list.forEach(ch => {
+      const c = creds[ch] || {};
+      const hasToken = !!(c.pageAccessToken || c.accessToken || c.apiKey);
+      const badge = document.getElementById(`channel-badge-${ch}`);
+      const statusText = document.getElementById(`token-status-text-${ch}`);
+
+      if (badge) {
+        if (hasToken) {
+          badge.className = 'status-badge connected';
+          badge.style.background = 'rgba(16, 185, 129, 0.15)';
+          badge.style.color = '#10b981';
+          badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Token Configurado';
+        } else {
+          badge.className = 'status-badge';
+          badge.style.background = 'rgba(245, 158, 11, 0.15)';
+          badge.style.color = '#f59e0b';
+          badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Requiere Token';
+        }
+      }
+
+      if (statusText) {
+        if (hasToken) {
+          statusText.textContent = 'Token guardado y listo para consultas en vivo';
+          statusText.style.color = '#10b981';
+        } else {
+          statusText.textContent = 'Falta ingresar el Token. Haz clic en "Configurar Token" para agregarlo';
+          statusText.style.color = '#f59e0b';
+        }
+      }
+    });
   }
 
   return {
     init,
     loadChannels,
+    updateCardsStatus,
     openCredentialsModal
   };
 })();

@@ -533,10 +533,24 @@
                       https://www.facebook.com/share/1EtoMYvYTw/ <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
-                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                  <span class="status-badge" id="channel-badge-facebook"><i class="fa-solid fa-circle-check"></i> Activo</span>
                 </div>
                 <div class="channel-card-body">
                   <p class="guide-text">Rastrea mensajes directos de Facebook Messenger y comentarios en las publicaciones de la página.</p>
+                  
+                  <div class="channel-token-status-box">
+                    <div class="token-status-left">
+                      <i class="fa-solid fa-key"></i>
+                      <div class="token-status-texts">
+                        <strong>Token de Acceso (Page Access Token)</strong>
+                        <span id="token-status-text-facebook">Requerido para leer y responder mensajes reales</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="facebook">
+                      <i class="fa-solid fa-pen-to-square"></i> Configurar Token
+                    </button>
+                  </div>
+
                   <div class="webhook-endpoint-box">
                     <label>Webhook URL (Meta Developers):</label>
                     <div class="copy-input-wrap">
@@ -570,10 +584,24 @@
                       @equilibrionutricion8 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
-                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                  <span class="status-badge" id="channel-badge-instagram"><i class="fa-solid fa-circle-check"></i> Activo</span>
                 </div>
                 <div class="channel-card-body">
                   <p class="guide-text">Rastrea mensajes directos (DMs), respuestas a historias y comentarios en Reels y publicaciones.</p>
+
+                  <div class="channel-token-status-box">
+                    <div class="token-status-left">
+                      <i class="fa-solid fa-key"></i>
+                      <div class="token-status-texts">
+                        <strong>Token de Acceso (Instagram Graph API)</strong>
+                        <span id="token-status-text-instagram">Mismo Page Access Token de la página vinculada</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="instagram">
+                      <i class="fa-solid fa-pen-to-square"></i> Configurar Token
+                    </button>
+                  </div>
+
                   <div class="webhook-endpoint-box">
                     <label>Webhook URL (Instagram Graph API):</label>
                     <div class="copy-input-wrap">
@@ -602,10 +630,24 @@
                       @equilibriobienestarynutricion <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
-                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                  <span class="status-badge" id="channel-badge-tiktok"><i class="fa-solid fa-circle-check"></i> Activo</span>
                 </div>
                 <div class="channel-card-body">
                   <p class="guide-text">Rastrea mensajes directos de TikTok y comentarios en videos donde las personas preguntan precios o información.</p>
+
+                  <div class="channel-token-status-box">
+                    <div class="token-status-left">
+                      <i class="fa-solid fa-key"></i>
+                      <div class="token-status-texts">
+                        <strong>Token de Acceso (TikTok Business API)</strong>
+                        <span id="token-status-text-tiktok">Access Token y Client Key</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="tiktok">
+                      <i class="fa-solid fa-pen-to-square"></i> Configurar Token
+                    </button>
+                  </div>
+
                   <div class="webhook-endpoint-box">
                     <label>Webhook URL (TikTok Developers):</label>
                     <div class="copy-input-wrap">
@@ -634,10 +676,24 @@
                       @equilibriobienestarynutricion <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
-                  <span class="status-badge connected"><i class="fa-solid fa-circle-check"></i> Conectado</span>
+                  <span class="status-badge" id="channel-badge-youtube"><i class="fa-solid fa-circle-check"></i> Activo</span>
                 </div>
                 <div class="channel-card-body">
                   <p class="guide-text">Rastrea comentarios en videos largos y Shorts pidiendo asesoría nutricional o cómo comprar suplementos.</p>
+
+                  <div class="channel-token-status-box">
+                    <div class="token-status-left">
+                      <i class="fa-solid fa-key"></i>
+                      <div class="token-status-texts">
+                        <strong>Clave de API de Google (YouTube Data API)</strong>
+                        <span id="token-status-text-youtube">Clave de API de Google Cloud Console</span>
+                      </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary config-channel-btn" data-channel="youtube">
+                      <i class="fa-solid fa-pen-to-square"></i> Configurar API Key
+                    </button>
+                  </div>
+
                   <div class="webhook-endpoint-box">
                     <label>Webhook URL (Google PubSub / Endpoint):</label>
                     <div class="copy-input-wrap">
