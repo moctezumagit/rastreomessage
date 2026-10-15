@@ -528,7 +528,7 @@ const InboxModule = (() => {
       .replace(/'/g, '&#039;');
   }
 
-  async function syncFacebookLive() {
+  async function syncAllLive() {
     const btn = document.getElementById('btn-sync-facebook');
     if (btn) {
       btn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin"></i> Sincronizando...';
@@ -536,21 +536,22 @@ const InboxModule = (() => {
     }
 
     try {
-      const res = await apiFetch('/api/channels/facebook/sync', { method: 'POST' });
+      const res = await apiFetch('/api/channels/sync', { method: 'POST' });
       if (res.success) {
-        showToast(`✅ Sincronizado con Facebook: ${res.result?.conversationsCount || 0} conversaciones procesadas.`, 'success', 4000);
+        const total = res.result?.totalConversations || 0;
+        showToast(`✅ Sincronizado en vivo: ${total} conversaciones revisadas (Facebook e Instagram).`, 'success', 4000);
         await loadConversations();
         if (AppState.activeConversationId) {
           await loadConversationDetails(AppState.activeConversationId);
         }
       } else {
-        showToast(res.message || 'Error al sincronizar con Facebook', 'warning', 4000);
+        showToast(res.message || 'Error al sincronizar con Meta', 'warning', 4000);
       }
     } catch (e) {
-      showToast('Error de red al sincronizar con Facebook', 'error');
+      showToast('Error de red al sincronizar con Meta', 'error');
     } finally {
       if (btn) {
-        btn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Sincronizar FB';
+        btn.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Sincronizar En Vivo';
         btn.disabled = false;
       }
     }
@@ -563,7 +564,8 @@ const InboxModule = (() => {
     selectConversation,
     loadQuickReplies,
     insertQuickReply,
-    syncFacebookLive
+    syncFacebookLive: syncAllLive,
+    syncAllLive
   };
 })();
 

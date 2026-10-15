@@ -59,6 +59,65 @@
   },
   "conversations": [
     {
+      "id": "conv-ig-934376356156975",
+      "channel": "instagram",
+      "contact": {
+        "id": "934376356156975",
+        "name": "@fatalfury01",
+        "username": "@fatalfury01",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+        "profileUrl": "https://instagram.com/fatalfury01"
+      },
+      "lead": {
+        "stage": "new",
+        "stageName": "Nuevo Prospecto",
+        "interest": "Mensaje Directo en Instagram (@equilibrionutricion8)",
+        "score": 80,
+        "estimatedValue": 2600,
+        "currency": "MXN",
+        "tags": [
+          "#InstagramDM",
+          "#EnVivo",
+          "#ProspectoReal"
+        ],
+        "notes": [
+          {
+            "id": "n-1792050359467",
+            "text": "Prospecto real conectado vía Instagram Direct. Mensaje: \"Prueba desde instagram\"",
+            "date": "2026-10-15T07:45:59.467Z"
+          }
+        ],
+        "lastFollowUp": "2026-10-15T07:37:16+0000",
+        "nextReminder": null
+      },
+      "status": "auto_replied",
+      "unreadCount": 1,
+      "sourceContext": "Instagram Direct (@equilibrionutricion8 en Vivo)",
+      "lastMessage": {
+        "id": "msg-1792050359481",
+        "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+        "timestamp": "2026-10-15T07:45:59.481Z",
+        "sender": "bot"
+      },
+      "messages": [
+        {
+          "id": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzQ4NDcwMjg2MTY5NTI0NDQ0MjkzNzM2MzI2NzU4NAZDZD",
+          "metaId": "aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDE2MTgwMjY4NTg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1OTI2NTYzOTAyNDI3MDcyODozMzA1NzQ4NDcwMjg2MTY5NTI0NDQ0MjkzNzM2MzI2NzU4NAZDZD",
+          "text": "Prueba desde instagram",
+          "timestamp": "2026-10-15T07:37:16+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "msg-1792050359481",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T07:45:59.481Z",
+          "sender": "bot",
+          "ruleTriggered": "🌙 Fuera de Horario de Atención",
+          "mediaUrl": null
+        }
+      ]
+    },
+    {
       "id": "conv-fb-28761985593442949",
       "channel": "facebook",
       "contact": {
@@ -91,13 +150,13 @@
         "nextReminder": null
       },
       "status": "auto_replied",
-      "unreadCount": 1,
+      "unreadCount": 0,
       "sourceContext": "Facebook Messenger (Conversación Oficial en Vivo)",
       "lastMessage": {
-        "id": "msg-1792048857548",
+        "id": "m_tZDxXFLqpJGz0YMYnWPhxq-0qP_GxpM89Dwg70vu2_FHw_leMYtywn0tc7_4iTrFnOakThvsta7mqwOEd3zSEQ",
         "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
-        "timestamp": "2026-10-15T07:20:57.548Z",
-        "sender": "bot"
+        "timestamp": "2026-10-15T07:27:31+0000",
+        "sender": "agent"
       },
       "messages": [
         {
@@ -114,6 +173,28 @@
           "sender": "bot",
           "ruleTriggered": "🌙 Fuera de Horario de Atención",
           "mediaUrl": null
+        },
+        {
+          "id": "m_sgikvAYCeG80aE8SQZpwr6-0qP_GxpM89Dwg70vu2_EGD1MMMbEi-Hv_W82V3JnizjZGKzoLghzGVw45pX_f_A",
+          "metaId": "m_sgikvAYCeG80aE8SQZpwr6-0qP_GxpM89Dwg70vu2_EGD1MMMbEi-Hv_W82V3JnizjZGKzoLghzGVw45pX_f_A",
+          "text": "Prueba 2 text mess",
+          "timestamp": "2026-10-15T07:27:27+0000",
+          "sender": "customer"
+        },
+        {
+          "id": "msg-1792049249854",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T07:27:29.854Z",
+          "sender": "bot",
+          "ruleTriggered": "🌙 Fuera de Horario de Atención",
+          "mediaUrl": null
+        },
+        {
+          "id": "m_tZDxXFLqpJGz0YMYnWPhxq-0qP_GxpM89Dwg70vu2_FHw_leMYtywn0tc7_4iTrFnOakThvsta7mqwOEd3zSEQ",
+          "metaId": "m_tZDxXFLqpJGz0YMYnWPhxq-0qP_GxpM89Dwg70vu2_FHw_leMYtywn0tc7_4iTrFnOakThvsta7mqwOEd3zSEQ",
+          "text": "¡Gracias por comunicarte con Equilibrio Bienestar y Nutrición! 🌙 Nuestro equipo de especialistas atiende de 9:00 AM a 8:00 PM. Tu mensaje ha quedado registrado con prioridad y te responderemos a primera hora. ¡Que tengas un excelente descanso!",
+          "timestamp": "2026-10-15T07:27:31+0000",
+          "sender": "agent"
         }
       ]
     },
@@ -277,8 +358,8 @@
         "lastFollowUp": "2026-10-14T19:15:00Z",
         "nextReminder": "2026-10-16T10:30:00Z"
       },
-      "status": "unread",
-      "unreadCount": 1,
+      "status": "read",
+      "unreadCount": 0,
       "sourceContext": "Respondió a Story sobre \"Glutatión y Desinflamación\"",
       "lastMessage": {
         "id": "m-ig-4",
@@ -772,7 +853,7 @@
       "facebook": {
         "appId": "1454685810125944",
         "appSecret": "",
-        "pageAccessToken": "EAAUrB2747HgBShHpHEKDrej2kZAXb8SQf9mcwDixHRkSLEJA4Vf53rAr9exKAraLrjgZA6wKDFQbEpgNQpJrekoiljIHGuQTJm5t1ZAmWmYQZAznYciVyr24gnEbMJT1kA9aoqJq6biDZCT83KBjetbGJNx20AxCv8uUGBlep1HdSNc2tNZBJcaXbmpA16drONQ9zRQlAk",
+        "pageAccessToken": "EAAUrB2747HgBSiPqZB6RAzZBRMMn1zRAcSDpY6XcLkJuKmBeFFVAWnwtaiKnwWPZAIP7zbwTLrk79smu8u7enZCraspfV19sd6FKzS43HirMnUSzV4k1M4OUPkGnemRCvDRAZB1MRubg9y6FeVIbtBr5lMDo6Ckcf5LCdDhLOD35NSDf2tgzZAl9QmrHSZCbRzH",
         "verifyToken": "equilibrio_social_token_2026",
         "pageId": "1296082000264195",
         "isConfigured": true,
@@ -782,7 +863,8 @@
       "instagram": {
         "instagramAccountId": "equilibrionutricion8",
         "accessToken": "",
-        "isConfigured": false
+        "isConfigured": true,
+        "pageAccessToken": "EAAUrB2747HgBSiPqZB6RAzZBRMMn1zRAcSDpY6XcLkJuKmBeFFVAWnwtaiKnwWPZAIP7zbwTLrk79smu8u7enZCraspfV19sd6FKzS43HirMnUSzV4k1M4OUPkGnemRCvDRAZB1MRubg9y6FeVIbtBr5lMDo6Ckcf5LCdDhLOD35NSDf2tgzZAl9QmrHSZCbRzH"
       },
       "tiktok": {
         "clientKey": "",

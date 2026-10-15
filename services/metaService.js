@@ -395,9 +395,192 @@ const metaService = {
         newLeadsCreated
       };
     } catch (e) {
-      console.error('[Meta Sync Exception]:', e);
+      console.error('[Meta FB Sync Exception]:', e);
       return { success: false, error: e.message };
     }
+  },
+
+  /**
+   * Sincroniza conversaciones y mensajes reales de Instagram Direct
+   * usando el endpoint oficial con platform=instagram
+   */
+  syncInstagramConversations: async () => {
+    const creds = await metaService.getPageCredentials();
+    if (!creds || !creds.pageAccessToken) {
+      return { success: false, message: 'Token de Meta no configurado' };
+    }
+
+    const { pageAccessToken, pageId } = creds;
+
+    try {
+      const endpoint = `https://graph.facebook.com/v19.0/${pageId}/conversations?platform=instagram&fields=id,snippet,updated_time,unread_count,messages.limit(20){id,message,created_time,from}&access_token=${pageAccessToken}`;
+      const res = await fetch(endpoint);
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error('[Meta IG Sync Error]:', data.error);
+        return { success: false, error: data.error };
+      }
+
+      const rawConversations = data.data || [];
+      let newMessagesIngested = 0;
+      let newLeadsCreated = 0;
+
+      const currentDbConvs = db.getConversations();
+
+      for (const conv of rawConversations) {
+        const rawMsgs = (conv.messages?.data || []).reverse();
+        if (rawMsgs.length === 0) continue;
+
+        // Identificar el usuario cliente (que no sea la cuenta oficial de Instagram)
+        let customer = null;
+        for (const m of rawMsgs) {
+          if (m.from && m.from.id !== '17841416180268589' && m.from.username !== 'equilibrionutricion8') {
+            customer = m.from;
+            break;
+          }
+        }
+        if (!customer) {
+          customer = rawMsgs[0]?.from || { id: 'ig-unknown', username: 'usuario_ig' };
+        }
+
+        const formattedMessages = rawMsgs.map(m => {
+          const isFromBusiness = (m.from?.id === '17841416180268589' || m.from?.username === 'equilibrionutricion8');
+          return {
+            id: m.id,
+            metaId: m.id,
+            text: m.message || '(Contenido multimedia o historia)',
+            timestamp: m.created_time,
+            sender: isFromBusiness ? 'agent' : 'customer'
+          };
+        });
+
+        const lastMsg = formattedMessages[formattedMessages.length - 1];
+
+        // Buscar si ya existe la conversación en la DB
+        let existing = currentDbConvs.find(c => 
+          c.channel === 'instagram' && (
+            c.contact.id === customer.id || 
+            c.id === `conv-ig-${customer.id}` ||
+            c.contact.username === `@${customer.username}`
+          )
+        );
+
+        if (!existing) {
+          const newConv = {
+            id: `conv-ig-${customer.id}`,
+            channel: 'instagram',
+            contact: {
+              id: customer.id,
+              name: `@${customer.username}`,
+              username: `@${customer.username}`,
+              avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+              profileUrl: `https://instagram.com/${customer.username}`
+            },
+            lead: {
+              stage: 'new',
+              stageName: 'Nuevo Prospecto',
+              interest: 'Mensaje Directo en Instagram (@equilibrionutricion8)',
+              score: 80,
+              estimatedValue: 2600,
+              currency: 'MXN',
+              tags: ['#InstagramDM', '#EnVivo', '#ProspectoReal'],
+              notes: [
+                {
+                  id: 'n-' + Date.now(),
+                  text: `Prospecto real conectado vía Instagram Direct. Mensaje: "${lastMsg.text}"`,
+                  date: new Date().toISOString()
+                }
+              ],
+              lastFollowUp: lastMsg.timestamp,
+              nextReminder: null
+            },
+            status: lastMsg.sender === 'customer' ? 'unread' : 'replied',
+            unreadCount: lastMsg.sender === 'customer' ? 1 : 0,
+            sourceContext: 'Instagram Direct (@equilibrionutricion8 en Vivo)',
+            lastMessage: {
+              id: lastMsg.id,
+              text: lastMsg.text,
+              timestamp: lastMsg.timestamp,
+              sender: lastMsg.sender
+            },
+            messages: formattedMessages
+          };
+
+          db.insertConversation(newConv);
+          newLeadsCreated++;
+          newMessagesIngested += formattedMessages.length;
+
+          // Auto-respuesta automática
+          if (lastMsg.sender === 'customer') {
+            await autoResponder.processIncomingMessage({
+              convId: newConv.id,
+              channel: 'instagram',
+              messageText: lastMsg.text,
+              isNewConversation: true
+            });
+          }
+        } else {
+          // Ya existe: anexar nuevos mensajes no registrados
+          const existingIds = new Set(existing.messages.map(m => m.metaId || m.id));
+          const freshMsgs = formattedMessages.filter(m => !existingIds.has(m.id));
+
+          if (freshMsgs.length > 0) {
+            freshMsgs.forEach(m => existing.messages.push(m));
+            existing.lastMessage = {
+              id: lastMsg.id,
+              text: lastMsg.text,
+              timestamp: lastMsg.timestamp,
+              sender: lastMsg.sender
+            };
+
+            if (lastMsg.sender === 'customer') {
+              existing.status = 'unread';
+              existing.unreadCount = (existing.unreadCount || 0) + freshMsgs.filter(m => m.sender === 'customer').length;
+              
+              db.saveUpdatedConversation(existing);
+              newMessagesIngested += freshMsgs.length;
+
+              await autoResponder.processIncomingMessage({
+                convId: existing.id,
+                channel: 'instagram',
+                messageText: lastMsg.text,
+                isNewConversation: false
+              });
+            } else {
+              db.saveUpdatedConversation(existing);
+            }
+          }
+        }
+      }
+
+      console.log(`[Meta IG Sync] Sincronización de Instagram: ${rawConversations.length} conversaciones, ${newMessagesIngested} mensajes nuevos.`);
+      return {
+        success: true,
+        conversationsCount: rawConversations.length,
+        newMessagesIngested,
+        newLeadsCreated
+      };
+    } catch (e) {
+      console.error('[Meta IG Sync Exception]:', e);
+      return { success: false, error: e.message };
+    }
+  },
+
+  /**
+   * Sincroniza tanto Facebook como Instagram en una sola llamada
+   */
+  syncAllMetaConversations: async () => {
+    const [fbRes, igRes] = await Promise.all([
+      metaService.syncFacebookConversations(),
+      metaService.syncInstagramConversations()
+    ]);
+    return {
+      facebook: fbRes,
+      instagram: igRes,
+      totalConversations: (fbRes.conversationsCount || 0) + (igRes.conversationsCount || 0),
+      totalNewMessages: (fbRes.newMessagesIngested || 0) + (igRes.newMessagesIngested || 0)
+    };
   },
 
   /**

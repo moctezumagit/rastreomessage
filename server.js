@@ -105,6 +105,20 @@ app.post('/api/channels/facebook/sync', async (req, res) => {
   res.json({ success: true, result, conversations });
 });
 
+// Sincronización manual en vivo de Instagram
+app.post('/api/channels/instagram/sync', async (req, res) => {
+  const result = await metaService.syncInstagramConversations();
+  const conversations = db.getConversations();
+  res.json({ success: true, result, conversations });
+});
+
+// Sincronización unificada de Meta (Facebook + Instagram)
+app.post('/api/channels/sync', async (req, res) => {
+  const result = await metaService.syncAllMetaConversations();
+  const conversations = db.getConversations();
+  res.json({ success: true, result, conversations });
+});
+
 // Conversaciones (Bandeja unificada)
 app.get('/api/conversations', (req, res) => {
   const { channel, status, stage, search } = req.query;
@@ -336,24 +350,24 @@ app.listen(PORT, () => {
   console.log(`   - YouTube:        http://localhost:${PORT}/api/webhooks/youtube`);
   console.log(`========================================================`);
 
-  // Sincronización inicial si ya existen credenciales guardadas
+  // Sincronización inicial si ya existen credenciales guardadas (Facebook e Instagram)
   setTimeout(() => {
     metaService.getPageCredentials().then(creds => {
       if (creds && creds.pageAccessToken) {
-        console.log('🔄 Ejecutando sincronización inicial de mensajes de Facebook...');
-        metaService.syncFacebookConversations().then(res => {
-          console.log(`✅ Sincronización inicial completada (${res.conversationsCount || 0} conversaciones procesadas).`);
+        console.log('🔄 Ejecutando sincronización inicial de mensajes de Meta (Facebook e Instagram)...');
+        metaService.syncAllMetaConversations().then(res => {
+          console.log(`✅ Sincronización inicial completada (${res.totalConversations || 0} conversaciones procesadas).`);
         });
       }
     });
   }, 1500);
 
-  // Sondeo en segundo plano cada 12 segundos para detectar nuevos mensajes
+  // Sondeo en segundo plano cada 12 segundos para detectar nuevos mensajes de Facebook e Instagram
   setInterval(async () => {
     try {
       const settings = db.getSettings();
       if (settings?.apiCredentials?.facebook?.pageAccessToken || process.env.META_PAGE_ACCESS_TOKEN) {
-        await metaService.syncFacebookConversations();
+        await metaService.syncAllMetaConversations();
       }
     } catch (err) {
       // Ignorar errores transitorios en sondeo background
