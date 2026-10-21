@@ -1,8 +1,16 @@
-# Dependencies
+﻿# Dependencies
 node_modules/
 
-# Environment
+# Environment and Secrets
 .env
+.env.*
+!.env.example
+
+# Local Database & Dynamic Data
+data/store.json
+data/*.bak
+data/*.backup
+data/*.local.json
 
 # Logs
 npm-debug.log*
