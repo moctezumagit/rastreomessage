@@ -336,12 +336,27 @@ const metaService = {
             });
 
             const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+            const replyMsgId = autoRes?.reply?.message?.id || autoRes?.reply?.id;
             if (autoRes?.triggered && replyText) {
-              await metaService.sendMessage({
+              const sendRes = await metaService.sendMessage({
                 recipientId: customer.id,
                 messageText: replyText,
                 channel: 'facebook'
               });
+              if (sendRes && sendRes.success) {
+                if (replyMsgId) {
+                  db.updateMessageDeliveryStatus(newConv.id, replyMsgId, {
+                    deliveryStatus: 'delivered',
+                    metaMessageId: sendRes.data?.message_id
+                  });
+                }
+              } else if (replyMsgId) {
+                db.updateMessageDeliveryStatus(newConv.id, replyMsgId, {
+                  deliveryStatus: 'failed',
+                  deliveryError: sendRes?.error || 'Error al enviar a Facebook Messenger',
+                  deliverySubcode: sendRes?.subcode
+                });
+              }
             }
           }
         } else {
@@ -374,12 +389,27 @@ const metaService = {
               });
 
               const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+              const replyMsgId = autoRes?.reply?.message?.id || autoRes?.reply?.id;
               if (autoRes?.triggered && replyText) {
-                await metaService.sendMessage({
+                const sendRes = await metaService.sendMessage({
                   recipientId: customer.id,
                   messageText: replyText,
                   channel: 'facebook'
                 });
+                if (sendRes && sendRes.success) {
+                  if (replyMsgId) {
+                    db.updateMessageDeliveryStatus(existing.id, replyMsgId, {
+                      deliveryStatus: 'delivered',
+                      metaMessageId: sendRes.data?.message_id
+                    });
+                  }
+                } else if (replyMsgId) {
+                  db.updateMessageDeliveryStatus(existing.id, replyMsgId, {
+                    deliveryStatus: 'failed',
+                    deliveryError: sendRes?.error || 'Error al enviar a Facebook Messenger',
+                    deliverySubcode: sendRes?.subcode
+                  });
+                }
               }
             } else {
               db.saveUpdatedConversation(existing);
@@ -521,6 +551,7 @@ const metaService = {
             });
 
             const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+            const replyMsgId = autoRes?.reply?.message?.id || autoRes?.reply?.id;
             if (autoRes?.triggered && replyText) {
               console.log(`[Meta IG AutoReply] Enviando respuesta automática a Instagram ID ${customer.id}: "${replyText.substring(0, 50)}..."`);
               const sendRes = await metaService.sendMessage({
@@ -530,6 +561,18 @@ const metaService = {
               });
               if (!sendRes.success) {
                 console.warn(`[Meta IG AutoReply Warning] No se pudo entregar respuesta automática a Instagram:`, sendRes.error);
+                if (replyMsgId) {
+                  db.updateMessageDeliveryStatus(newConv.id, replyMsgId, {
+                    deliveryStatus: 'failed',
+                    deliveryError: sendRes.error,
+                    deliverySubcode: sendRes.subcode
+                  });
+                }
+              } else if (replyMsgId) {
+                db.updateMessageDeliveryStatus(newConv.id, replyMsgId, {
+                  deliveryStatus: 'delivered',
+                  metaMessageId: sendRes.data?.message_id
+                });
               }
             }
           }
@@ -562,6 +605,7 @@ const metaService = {
               });
 
               const replyText = autoRes?.reply?.message?.text || autoRes?.reply?.text;
+              const replyMsgId = autoRes?.reply?.message?.id || autoRes?.reply?.id;
               if (autoRes?.triggered && replyText) {
                 console.log(`[Meta IG AutoReply] Enviando respuesta automática a Instagram ID ${customer.id}: "${replyText.substring(0, 50)}..."`);
                 const sendRes = await metaService.sendMessage({
@@ -571,6 +615,18 @@ const metaService = {
                 });
                 if (!sendRes.success) {
                   console.warn(`[Meta IG AutoReply Warning] No se pudo entregar respuesta automática a Instagram:`, sendRes.error);
+                  if (replyMsgId) {
+                    db.updateMessageDeliveryStatus(existing.id, replyMsgId, {
+                      deliveryStatus: 'failed',
+                      deliveryError: sendRes.error,
+                      deliverySubcode: sendRes.subcode
+                    });
+                  }
+                } else if (replyMsgId) {
+                  db.updateMessageDeliveryStatus(existing.id, replyMsgId, {
+                    deliveryStatus: 'delivered',
+                    metaMessageId: sendRes.data?.message_id
+                  });
                 }
               }
             } else {
@@ -625,7 +681,8 @@ const metaService = {
       const url = `https://graph.facebook.com/v19.0/${pageId}/messages?access_token=${token}`;
       const payload = {
         recipient: { id: recipientId },
-        message: { text: messageText }
+        message: { text: messageText },
+        messaging_type: 'RESPONSE'
       };
 
       const response = await fetch(url, {
@@ -637,12 +694,17 @@ const metaService = {
       const data = await response.json();
       if (!response.ok) {
         console.error(`[Meta Send Error] [${channel.toUpperCase()}]:`, data.error);
+        let friendlyError = data.error?.message || 'Error al enviar a Meta';
         if (data.error?.error_subcode === 2534022) {
-          console.warn(`[Meta Send Hint]: Error 2534022 en Instagram ("fuera del período permitido"). Causa habitual: La opción "Permitir acceso a los mensajes" no está activa en la app de Instagram (@equilibrionutricion8 > Configuración > Mensajes y respuestas a historias > Controles de mensajes > Herramientas conectadas) o el usuario está fuera de la ventana de 24h.`);
+          friendlyError = 'Rechazado por Meta (2534022 - Fuera de ventana): Si la app está en Modo Desarrollo, la cuenta receptora debe agregarse como "Instagram Tester" en developers.facebook.com y aceptar la invitación en su app de Instagram. También verifica activar "Permitir acceso a los mensajes" en la app móvil de Instagram (@equilibrionutricion8).';
+          console.warn(`[Meta Send Hint]: Error 2534022 en Instagram ("fuera del período permitido"). Causa habitual: La cuenta receptora no es Instagram Tester en developers.facebook.com (App en Modo Desarrollo), o la opción "Permitir acceso a los mensajes" no está activa en la app de Instagram (@equilibrionutricion8), o la ventana de 24h ha vencido.`);
+        } else if (data.error?.error_subcode === 2534041) {
+          friendlyError = 'Rechazado por Meta (2534041): El acceso a mensajes está desactivado en la app móvil de Instagram. Activa "Permitir acceso a los mensajes" en Configuración > Mensajes y respuestas a historias > Controles de mensajes > Herramientas conectadas.';
         }
         return {
           success: false,
-          error: data.error?.message || 'Error al enviar a Meta',
+          error: friendlyError,
+          rawError: data.error?.message,
           code: data.error?.code,
           subcode: data.error?.error_subcode,
           data

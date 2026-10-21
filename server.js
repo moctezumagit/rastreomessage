@@ -181,17 +181,32 @@ app.post('/api/conversations/:id/messages', async (req, res) => {
   let deliveryWarning = null;
   if (deliveryResult && deliveryResult.success === false) {
     if (deliveryResult.subcode === 2534022) {
-      deliveryWarning = 'Meta rechazó la entrega en Instagram (código 2534022): Verifica que en tu app móvil de Instagram (@equilibrionutricion8) esté activo "Permitir acceso a los mensajes" en Configuración > Mensajes > Herramientas conectadas.';
+      deliveryWarning = 'Meta rechazó la entrega en Instagram (código 2534022): La cuenta debe estar agregada como "Instagram Tester" en developers.facebook.com (si la App está en Modo Desarrollo) y haber aceptado la invitación en Instagram. Además, verifica tener activo "Permitir acceso a los mensajes" en la app móvil de Instagram (@equilibrionutricion8).';
     } else {
       deliveryWarning = `No se pudo entregar en ${conv.channel}: ${deliveryResult.error || 'Error de API'}`;
     }
+    if (result && result.message) {
+      db.updateMessageDeliveryStatus(conv.id, result.message.id, {
+        deliveryStatus: 'failed',
+        deliveryError: deliveryWarning,
+        deliverySubcode: deliveryResult.subcode
+      });
+    }
+  } else if (deliveryResult && deliveryResult.success && result && result.message) {
+    db.updateMessageDeliveryStatus(conv.id, result.message.id, {
+      deliveryStatus: 'delivered',
+      metaMessageId: deliveryResult.data?.message_id
+    });
   }
+
+  const updatedConv = db.getConversationById(conv.id);
 
   res.json({ 
     success: true, 
     deliveredToMeta: deliveryResult?.success !== false,
     deliveryWarning,
-    ...result 
+    conversation: updatedConv,
+    message: result.message
   });
 });
 

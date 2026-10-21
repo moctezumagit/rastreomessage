@@ -591,7 +591,9 @@ const db = {
       timestamp: new Date().toISOString(),
       sender, // 'customer', 'agent', 'bot'
       ruleTriggered,
-      mediaUrl
+      mediaUrl,
+      deliveryStatus: sender === 'customer' ? 'received' : 'pending',
+      deliveryError: null
     };
 
     conv.messages.push(newMsg);
@@ -614,6 +616,29 @@ const db = {
 
     saveData(data);
     return { conversation: conv, message: newMsg };
+  },
+
+  updateMessageDeliveryStatus: (convId, messageId, { deliveryStatus, deliveryError = null, deliverySubcode = null, metaMessageId = null }) => {
+    const data = loadData();
+    const conv = data.conversations.find(c => c.id === convId);
+    if (!conv) return null;
+
+    const msg = conv.messages.find(m => m.id === messageId || m.metaId === messageId);
+    if (msg) {
+      msg.deliveryStatus = deliveryStatus;
+      if (deliveryError !== undefined) msg.deliveryError = deliveryError;
+      if (deliverySubcode !== undefined) msg.deliverySubcode = deliverySubcode;
+      if (metaMessageId !== undefined) msg.metaMessageId = metaMessageId;
+    }
+
+    if (deliveryStatus === 'failed') {
+      conv.lastDeliveryWarning = deliveryError;
+    } else if (deliveryStatus === 'delivered') {
+      conv.lastDeliveryWarning = null;
+    }
+
+    saveData(data);
+    return { conversation: conv, message: msg };
   },
 
   createConversationFromWebhook: ({ channel, contact, messageText, mediaUrl = null, sourceContext = null }) => {

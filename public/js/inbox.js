@@ -286,15 +286,30 @@ const InboxModule = (() => {
       sourceBanner.style.display = 'none';
     }
 
+    // Banner de advertencia de entrega en Instagram / Facebook
+    const deliveryBanner = document.getElementById('delivery-warning-banner');
+    const deliveryText = document.getElementById('delivery-warning-text');
+    const hasFailedMessages = (conv.messages || []).some(m => m.deliveryStatus === 'failed');
+    if (deliveryBanner && deliveryText) {
+      if (conv.lastDeliveryWarning || hasFailedMessages) {
+        deliveryBanner.style.display = 'flex';
+        deliveryText.textContent = conv.lastDeliveryWarning || 'Meta rechazó la entrega en Instagram (código 2534022): La cuenta receptora debe ser Instagram Tester o tener activo "Permitir acceso a los mensajes".';
+      } else {
+        deliveryBanner.style.display = 'none';
+      }
+    }
+
+    AppState.activeConv = conv;
+
     // Renderizar mensajes
-    renderMessages(conv.messages || []);
+    renderMessages(conv.messages || [], conv);
 
     // Actualizar Ficha CRM (Dossier)
     renderLeadDossier(conv);
   }
 
   // Renderizar burbujas de chat
-  function renderMessages(messages) {
+  function renderMessages(messages, conv = AppState.activeConv) {
     const container = document.getElementById('chat-messages-container');
     if (!container) return;
 
@@ -313,6 +328,31 @@ const InboxModule = (() => {
         senderLabel = `<span>Asesor Equilibrio Nutrición</span>`;
       }
 
+      let statusIcon = '';
+      if (!isCustomer) {
+        if (m.deliveryStatus === 'failed') {
+          const chName = conv?.channel === 'instagram' ? 'Instagram' : (conv?.channel === 'facebook' ? 'Facebook' : 'red social');
+          statusIcon = `
+            <span class="delivery-status-indicator failed" title="${escapeHtml(m.deliveryError || 'Error al entregar en ' + chName)}">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span style="font-size:0.7rem; font-weight:600; margin-left:3px;">No entregado en ${chName}</span>
+            </span>
+          `;
+        } else if (m.deliveryStatus === 'delivered') {
+          statusIcon = `
+            <span class="delivery-status-indicator delivered" title="Entregado al usuario">
+              <i class="fa-solid fa-check-double" style="color: #10b981;"></i>
+            </span>
+          `;
+        } else {
+          statusIcon = `
+            <span class="delivery-status-indicator pending" title="Registrado en sistema">
+              <i class="fa-solid fa-check" style="color: #94a3b8;"></i>
+            </span>
+          `;
+        }
+      }
+
       return `
         <div class="message-bubble-row ${senderRoleClass}">
           <div class="bubble-sender-name">${senderLabel}</div>
@@ -321,7 +361,7 @@ const InboxModule = (() => {
           </div>
           <div class="bubble-meta">
             <span>${timeStr}</span>
-            ${!isCustomer ? '<i class="fa-solid fa-check-double" style="color: #10b981;"></i>' : ''}
+            ${statusIcon}
           </div>
         </div>
       `;
@@ -372,12 +412,21 @@ const InboxModule = (() => {
     });
 
     if (res.success && res.conversation) {
-      renderMessages(res.conversation.messages);
+      AppState.activeConv = res.conversation;
+      renderMessages(res.conversation.messages, res.conversation);
       loadConversations();
-      if (res.deliveredToMeta === false && res.deliveryWarning) {
-        showToast(res.deliveryWarning, 'warning', 8000);
-      } else {
-        showToast('Mensaje enviado al prospecto', 'success', 2500);
+
+      const deliveryBanner = document.getElementById('delivery-warning-banner');
+      const deliveryText = document.getElementById('delivery-warning-text');
+      if (deliveryBanner && deliveryText) {
+        if (res.deliveredToMeta === false && res.deliveryWarning) {
+          deliveryBanner.style.display = 'flex';
+          deliveryText.textContent = res.deliveryWarning;
+          showToast(res.deliveryWarning, 'warning', 8000);
+        } else {
+          deliveryBanner.style.display = 'none';
+          showToast('Mensaje enviado al prospecto', 'success', 2500);
+        }
       }
     }
   }
@@ -561,6 +610,16 @@ const InboxModule = (() => {
     }
   }
 
+  function showMetaHelpModal() {
+    const modal = document.getElementById('modal-meta-guide');
+    if (modal) modal.classList.add('active');
+  }
+
+  function hideMetaHelpModal() {
+    const modal = document.getElementById('modal-meta-guide');
+    if (modal) modal.classList.remove('active');
+  }
+
   return {
     init,
     loadConversations,
@@ -569,7 +628,9 @@ const InboxModule = (() => {
     loadQuickReplies,
     insertQuickReply,
     syncFacebookLive: syncAllLive,
-    syncAllLive
+    syncAllLive,
+    showMetaHelpModal,
+    hideMetaHelpModal
   };
 })();
 

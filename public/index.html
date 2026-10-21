@@ -246,6 +246,24 @@
                 <span id="message-source-text">Origen: Mensaje directo</span>
               </div>
 
+              <!-- Banner de Advertencia de Entrega de Meta -->
+              <div class="delivery-warning-banner" id="delivery-warning-banner" style="display: none;">
+                <i class="fa-solid fa-triangle-exclamation" style="color: #f87171; font-size: 1.2rem; margin-top: 2px;"></i>
+                <div class="delivery-warning-content" style="flex: 1;">
+                  <div style="font-weight: 700; color: #f87171; margin-bottom: 3px;">
+                    <i class="fa-brands fa-instagram"></i> Aviso de Entrega en Instagram:
+                  </div>
+                  <div id="delivery-warning-text" style="color: #fca5a5; font-size: 0.8rem; line-height: 1.45;">
+                    Meta no pudo entregar la respuesta en tu celular (Error 2534022).
+                  </div>
+                  <div style="margin-top: 8px;">
+                    <button type="button" class="btn btn-xs btn-outline" style="color: #fca5a5; border-color: rgba(239,68,68,0.5); background: rgba(239,68,68,0.15);" onclick="InboxModule.showMetaHelpModal()">
+                      <i class="fa-solid fa-circle-question"></i> Ver cómo activar la recepción en tu teléfono
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               <!-- Historial de Mensajes -->
               <div class="chat-messages-container" id="chat-messages-container">
                 <!-- Mensajes inyectados dinámicamente -->
@@ -914,6 +932,67 @@
       </div>
     </div>
 
+
+    <!-- MODAL: GUÍA DE ACTIVACIÓN DE MENSAJES EN INSTAGRAM (META) -->
+    <div class="modal-overlay" id="modal-meta-guide">
+      <div class="modal-dialog" style="max-width: 650px;">
+        <div class="modal-header" style="background: rgba(225, 48, 108, 0.08); border-bottom: 1px solid rgba(225, 48, 108, 0.2);">
+          <div class="modal-title-wrap">
+            <i class="fa-brands fa-instagram" style="color: #e1306c;"></i>
+            <h3>Solución: Por qué no llega la respuesta a Instagram</h3>
+          </div>
+          <button class="modal-close-btn" id="btn-close-meta-guide-modal" onclick="InboxModule.hideMetaHelpModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" style="padding: 20px 24px; font-size: 0.88rem; line-height: 1.55;">
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--radius-md); padding: 12px 16px; margin-bottom: 20px;">
+            <strong style="color: #f87171;"><i class="fa-solid fa-triangle-exclamation"></i> Diagnóstico de Meta Graph API:</strong>
+            <p style="margin: 4px 0 0 0; color: #fca5a5; font-size: 0.82rem;">
+              Meta devuelve el error <code>(#10) fuera del período permitido (subcode: 2534022)</code>. Esto ocurre por las políticas de privacidad y control de spam de Meta cuando la app está en desarrollo o faltan permisos en el teléfono.
+            </p>
+          </div>
+
+          <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <span style="background: #e1306c; color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">1</span>
+            Activar "Permitir acceso a los mensajes" en la cuenta comercial (@equilibrionutricion8)
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 8px;">
+            Abre la app de Instagram en tu teléfono con la cuenta de <strong>@equilibrionutricion8</strong>:
+          </p>
+          <ol style="margin-left: 20px; color: var(--text-muted); font-size: 0.82rem; margin-bottom: 20px;">
+            <li>Ve a tu <strong>Perfil > Menú (☰) > Configuración y privacidad</strong>.</li>
+            <li>Entra a <strong>Mensajes y respuestas a historias > Controles de mensajes</strong>.</li>
+            <li>En la sección <strong>Herramientas conectadas</strong>, activa: <strong>"Permitir acceso a los mensajes"</strong>.</li>
+          </ol>
+
+          <h4 style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <span style="background: #6366f1; color: white; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem;">2</span>
+            Agregar tu cuenta personal como "Instagram Tester" (Modo Desarrollo)
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 8px;">
+            Dado que tu App de Meta (<strong>Equilibrio Mensajes CRM</strong>) está en modo de desarrollo, Meta <strong>únicamente permite enviar mensajes</strong> a cuentas registradas como Tester:
+          </p>
+          <ol style="margin-left: 20px; color: var(--text-muted); font-size: 0.82rem; margin-bottom: 16px;">
+            <li>Entra a <a href="https://developers.facebook.com/apps/1454685810125944/roles/roles/" target="_blank" style="color: var(--primary); text-decoration: underline;">Meta for Developers &gt; Roles &gt; Roles</a>.</li>
+            <li>Baja hasta la sección <strong>Comprobadores de Instagram (Instagram Testers)</strong>.</li>
+            <li>Haz clic en <strong>Agregar comprobadores de Instagram</strong> y escribe tu usuario personal (ej. <code>fatalfury01</code>).</li>
+            <li>En tu celular, abre Instagram con tu cuenta personal (ej. <code>fatalfury01</code>), entra a: <strong>Configuración &gt; Apps y sitios web &gt; Invitaciones de comprobador</strong> y pulsa <strong>Aceptar</strong>.</li>
+          </ol>
+
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-md); padding: 12px 16px;">
+            <strong style="color: #34d399;"><i class="fa-solid fa-circle-check"></i> Resultado inmediato:</strong>
+            <p style="margin: 4px 0 0 0; color: var(--text-muted); font-size: 0.82rem;">
+              En cuanto aceptes la invitación de Tester y envíes un mensaje desde tu cuenta de Instagram, el sistema responderá automáticamente y el mensaje <strong>sí llegará en tiempo real a tu chat de Instagram en el celular</strong>.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="InboxModule.hideMetaHelpModal()">Cerrar</button>
+          <a href="https://developers.facebook.com/apps/1454685810125944/roles/roles/" target="_blank" class="btn btn-primary-gradient">
+            <i class="fa-solid fa-external-link"></i> Abrir Meta Developers Roles
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
     <div class="toast-container" id="toast-container"></div>
